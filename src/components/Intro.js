@@ -22,7 +22,13 @@ export default function Intro() {
 
     useEffect(() => {
         fetch();
+        document.querySelector('.btn2').setAttribute('disabled', 'disabled');
     }, []);
+
+    function pageChanger() {
+        console.log('changing...');
+        window.location.href='#/test'
+      }
 
     return (
         <div>
@@ -46,7 +52,7 @@ export default function Intro() {
 
             <br/>
 
-            <button className="btn2" disabled>검사시작</button>
+            <button className="btn2" onClick={pageChanger}>검사시작</button>
         </div>
     )
 }

@@ -1,8 +1,12 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 export default function User() {
     const [name, setName] = useState('');
     const [gender, setGender] = useState('');
+    
+    useEffect(() => {
+      document.querySelector('.btn').setAttribute('disabled', 'disabled');
+    }, []);
 
     function nameCheck(name) {
       const reg = /^[가-힣]{2,}$/;
@@ -13,7 +17,12 @@ export default function User() {
 
     function btnActive() {
         document.querySelector('.btn').removeAttribute('disabled');
-        console.log('active')
+        console.log('active');
+    }
+
+    function pageChanger() {
+      console.log('changing...');
+      window.location.href='#/intro'
     }
 
     return (
@@ -45,8 +54,8 @@ export default function User() {
           </form>
 
           <br/>
-        
-          <button className="btn" disabled onClick={()=>{console.log(gender, name)}}>검사시작</button>
+           
+          <button type="button" className="btn" onClick={pageChanger} >검사시작</button>
         </>
     )
 }
