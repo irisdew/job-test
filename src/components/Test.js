@@ -5,7 +5,7 @@ import './Test.css';
 export default function Test() {
     const [data, setData] = useState({data: []});
     const [answers, setAnswers] = useState("");
-    const [mode, setMode] = useState("group1");
+    const [num, setNum] = useState(1);
 
     async function fetch() {
         const response = await axios.get('http://www.career.go.kr/inspct/openapi/test/questions?apikey=238b48bf19364a4f775ccd83b30d13b3&q=6')
@@ -18,12 +18,7 @@ export default function Test() {
         fetch();
     }, []);
 
-    const group1 = data.data.slice(0, 5);
-    const group2 = data.data.slice(5, 10);
-    const group3 = data.data.slice(10, 15);
-    const group4 = data.data.slice(15, 20);
-    const group5 = data.data.slice(20, 25);
-    const group6 = data.data.slice(25, );
+    const group = data.data.slice(num*5-5, num*5);
     
     function qListMaker(group) {
         const qList = group.map((d) => {
@@ -45,7 +40,12 @@ export default function Test() {
         
         return qList
     }
-    
+
+    const questions = qListMaker(group);
+
+    if (num === 7) {
+        window.location.href='#/result'
+    }
 
     return(
         <>
@@ -53,17 +53,16 @@ export default function Test() {
 
         <br/>
         
-        <div>{qListMaker(group1)}</div>
-        <div>{qListMaker(group2)}</div>
-        <div>{qListMaker(group3)}</div>
-        <div>{qListMaker(group4)}</div>
-        <div>{qListMaker(group5)}</div>
-        <div>{qListMaker(group6)}</div>
+        <div>{questions}</div>
 
         <br/>
 
-        <button>이전</button>
-        <button>다음</button>
+        <button onClick={()=>{
+            setNum(num-1);
+            console.log(num);}}>이전</button>
+        <button onClick={()=>{
+            setNum(num+1);
+            console.log(num);}}>다음</button>
         </>
     );
 }
