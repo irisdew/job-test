@@ -18,20 +18,18 @@ export default function Test() {
         fetch();
     }, []);
 
-    const group = data.data.slice(num*5-5, num*5);
+    const group1 = data.data.slice(0, 5);
+    const group2 = data.data.slice(5, 10);
+    const group3 = data.data.slice(10, 15);
+    const group4 = data.data.slice(15, 20);
+    const group5 = data.data.slice(20, 25);
+    const group6 = data.data.slice(25, );
     
     function qListMaker(group) {
         const qList = group.map((d) => {
             return(
-              <form id="questions" className={d.qitemNo} onChange={(event)=>{
-                  const target = event.target.value;
-                  const name = event.target.name;
-                  const newAnswer = "B"+name+"="+target;
-                  setAnswers(answers+" "+newAnswer)
-                  console.log(target);
-                  console.log(answers);
-                  }}> 
-                  <li>{d.qitemNo} {d.question}</li>
+              <form key={d.qitemNo} id="questions" className={d.qitemNo} > 
+                  <li key={d.qitemNo}>{d.qitemNo} {d.question}</li>
                   <label><input type="radio" name={d.qitemNo} value={d.answerScore01}/>{d.answer01}</label>
                   <label><input type="radio" name={d.qitemNo} value={d.answerScore02}/>{d.answer02}</label>
               </form>
@@ -41,11 +39,34 @@ export default function Test() {
         return qList
     }
 
-    const questions = qListMaker(group);
-
-    if (num === 7) {
-        window.location.href='#/result'
+    function showNextQList(num) {
+        if (num > 5) {
+            window.location.href='#/result'
+        } else {
+            setNum(num+1);
+            document.getElementById(`group${num}`).style.display = "none";
+            document.getElementById(`group${num+1}`).style.display = "block";
+        }
     }
+
+    function showPrevQList(num) {
+        setNum(num-1);
+        console.log(num);
+        if (num < 2) {
+            window.location.href='#/intro'
+        } else {
+            document.getElementById(`group${num}`).style.display = "none";
+            document.getElementById(`group${num-1}`).style.display = "block";
+        }
+    }
+    
+    useEffect(() => {
+        if (num === 1) {
+            document.getElementById("group1").style.display = "block"
+        } else if (num === 7) {
+            window.location.href='#/result'
+        }
+    })
 
     return(
         <>
@@ -53,16 +74,23 @@ export default function Test() {
 
         <br/>
         
-        <div>{questions}</div>
+        <div className="group" id="group1">{qListMaker(group1)}</div>
+        <div className="group" id="group2">{qListMaker(group2)}</div>
+        <div className="group" id="group3">{qListMaker(group3)}</div>
+        <div className="group" id="group4">{qListMaker(group4)}</div>
+        <div className="group" id="group5">{qListMaker(group5)}</div>
+        <div className="group" id="group6">{qListMaker(group6)}</div>
+
 
         <br/>
 
         <button onClick={()=>{
-            setNum(num-1);
-            console.log(num);}}>이전</button>
+            showPrevQList(num);
+            }}>이전</button>
         <button onClick={()=>{
-            setNum(num+1);
-            console.log(num);}}>다음</button>
+            console.log(num);
+            showNextQList(num);
+            }}>다음</button>
         </>
     );
 }
