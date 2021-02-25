@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+// import jQuery from "jquery";
+// window.$ = window.jQuery = jQuery;
 import './Test.css';
 
 export default function Test() {
     const [data, setData] = useState({data: []});
-    const [answers, setAnswers] = useState("");
     const [num, setNum] = useState(1);
+    const [answers, setAnswers] = useState("");
 
     async function fetch() {
         const response = await axios.get('http://www.career.go.kr/inspct/openapi/test/questions?apikey=238b48bf19364a4f775ccd83b30d13b3&q=6')
@@ -28,11 +30,11 @@ export default function Test() {
     function qListMaker(group) {
         const qList = group.map((d) => {
             return(
-              <form key={d.qitemNo} id="questions" className={d.qitemNo} > 
+              <div key={d.qitemNo} id="question"> 
                   <li key={d.qitemNo}>{d.qitemNo} {d.question}</li>
-                  <label><input type="radio" name={d.qitemNo} value={d.answerScore01}/>{d.answer01}</label>
-                  <label><input type="radio" name={d.qitemNo} value={d.answerScore02}/>{d.answer02}</label>
-              </form>
+                  <label><input type="radio" name={"B"+d.qitemNo} value={d.answerScore01}/>{d.answer01}</label> &ensp;
+                  <label><input type="radio" name={"B"+d.qitemNo} value={d.answerScore02}/>{d.answer02}</label>
+              </div>
               )
           })
         
@@ -68,18 +70,31 @@ export default function Test() {
         }
     })
 
+    function testData() {
+        const form = document.getElementById('testForm');
+        const inputs = form.querySelectorAll('input:checked');
+        //const vals = inputs.map((input)=>{console.log(input.input.value)})
+        console.log(inputs);
+        let sss = ""
+        inputs.forEach((x)=>{sss += x.name+"="+x.value+" "});
+        console.log(sss);
+        return(sss);
+    }
+
     return(
         <>
         <h1>검사진행</h1>
 
         <br/>
         
+        <form id="testForm">
         <div className="group" id="group1">{qListMaker(group1)}</div>
         <div className="group" id="group2">{qListMaker(group2)}</div>
         <div className="group" id="group3">{qListMaker(group3)}</div>
         <div className="group" id="group4">{qListMaker(group4)}</div>
         <div className="group" id="group5">{qListMaker(group5)}</div>
         <div className="group" id="group6">{qListMaker(group6)}</div>
+        </form>
 
 
         <br/>
@@ -91,6 +106,12 @@ export default function Test() {
             console.log(num);
             showNextQList(num);
             }}>다음</button>
+
+        <button onClick={() => {
+            testData();
+            setAnswers(testData());
+            console.log("answer state값", answers);
+        }}>현재결과</button>
         </>
     );
 }

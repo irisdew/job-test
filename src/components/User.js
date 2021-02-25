@@ -11,7 +11,7 @@ export default function User() {
     function nameCheck(name) {
       const reg = /^[가-힣]{2,}$/;
       if(!reg.test(name)) {
-        console.log('유효한 이름');
+        console.log('유효하지 않은 이름');
       }
     }
 
@@ -23,6 +23,19 @@ export default function User() {
     function pageChanger() {
       console.log('changing...');
       window.location.href='#/intro'
+    }
+
+    function userData() {
+      const params = {
+        "apikey": "",
+        "qestrnSeq": "6",
+        "trgetSe": "100209",
+        "name": name,
+        "gender": gender,
+        "grade": "2",
+        "startDtm": Date.now()
+      }
+      console.log(params);
     }
 
     return (
@@ -48,14 +61,17 @@ export default function User() {
               };
             }}>
             <p>성별</p>
-            <label><input type="radio" name="gender" value="male"/>남자</label>
+            <label><input type="radio" name="gender" value="100323"/>남자</label>
             <br/>
-            <label><input type="radio" name="gender" value="female"/>여자</label>
+            <label><input type="radio" name="gender" value="100324"/>여자</label>
           </form>
 
           <br/>
            
-          <button type="button" className="btn" onClick={pageChanger} >검사시작</button>
+          <button type="button" className="btn" onClick={(()=>{
+            pageChanger();
+            userData();
+          })} >검사시작</button>
         </>
     )
 }
