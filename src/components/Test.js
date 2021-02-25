@@ -63,6 +63,7 @@ export default function Test() {
     }
     
     useEffect(() => {
+        document.querySelector('.nextBtn').setAttribute('disabled', 'disabled');
         if (num === 1) {
             document.getElementById("group1").style.display = "block"
         } else if (num === 7) {
@@ -87,7 +88,13 @@ export default function Test() {
 
         <br/>
         
-        <form id="testForm">
+        <form id="testForm" onChange={()=>{
+            const count = document.querySelectorAll('input:checked').length;
+            console.log("count:", count);
+            if (count % 5 === 0 | count === 28) {
+                document.querySelector('.nextBtn').removeAttribute('disabled');
+            }
+        }}>
         <div className="group" id="group1">{qListMaker(group1)}</div>
         <div className="group" id="group2">{qListMaker(group2)}</div>
         <div className="group" id="group3">{qListMaker(group3)}</div>
@@ -102,7 +109,7 @@ export default function Test() {
         <button onClick={()=>{
             showPrevQList(num);
             }}>이전</button>
-        <button onClick={()=>{
+        <button className="nextBtn" onClick={()=>{
             console.log(num);
             showNextQList(num);
             }}>다음</button>
