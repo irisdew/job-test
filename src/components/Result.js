@@ -2,9 +2,12 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Bar } from 'react-chartjs-2';
 
+import './Result.css'
+
 export default function Result(props){
     const [seq, setSeq] = useState();
     const [result, setResult] = useState({});
+    const [wow, setWow] = useState([1, 3, 4, 5, 3, 5, 7, 1]);
     const [rank1, setRank1] = useState();
     const [rank2, setRank2] = useState();
 
@@ -25,31 +28,37 @@ export default function Result(props){
             console.log("web-result:", response.data.RESULT.url)
             const seq= response.data.RESULT.url.split('=')[1];
             console.log(seq);
-            setSeq(seq);
+            graph(seq);
         })
     }
     
-    async function graph() {
+    async function graph(seq) {
         const resultURL = 'https://inspct.career.go.kr/inspct/api/psycho/report?seq=' + seq;
         // console.log(resultURL);
         const response = await axios.get(resultURL)
         console.log(response.data.result);
-        setResult(response.data.result);
+        setResult(response.data.result)
+        .then(()=>{
+            console.log(result.wonScore.split(' '))
+            const wow = result.wonScore.split(' ').map((word) => {return parseInt(word.split('=')[1]);});
+            wow.pop();
+            console.log("wow", wow)
+        })
+        console.log("전체 결과:", response)
     }
-
 
     useEffect(() => {
         console.log(props.params);
         fetch();
     }, []);
-
+    
     const data = {
         labels: ['능력발휘', '자율성', '보수', '안정성', '사회적 인정', '사회봉사', '자기계발', '창의성'],
         datasets: [
             {
-                borderWidth: 1,
-                data: [3, 1, 2, 3, 4, 5, 1, 3],
-                backgroundColor: ["#11b288", "#207ac7", "#207ac7", "#207ac7", "yellow", "green", "red", "blue"]
+                borderWidth: 0,
+                data: wow,
+                backgroundColor: ["#f3a683", "#f5cd79", "#f8a5c2", "#63cdda", "#778beb", "#e77f67", "#b8e994", "#ea8685"]
             }
         ]
     }
@@ -76,7 +85,7 @@ export default function Result(props){
         
         <button onClick={()=>{
             console.log('결과보기');
-            graph();
+            graph(seq);
         }}>결과보기</button>
 
         <div>
@@ -97,12 +106,14 @@ export default function Result(props){
 
             <p>{props.answers}</p>
 
+            <div className="chart">
             <Bar 
                 data={data}
                 width={300}
                 height={200}
                 options={options}
             />
+            </div>
 
         </div>
 
