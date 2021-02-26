@@ -1,20 +1,19 @@
 import React, { useState, useEffect } from 'react';
 
-export default function User() {
+export default function User(props) {
     const [name, setName] = useState('');
     const [gender, setGender] = useState('');
-    const [params, setParams] = useState({});
     
     useEffect(() => {
       document.querySelector('.btn').setAttribute('disabled', 'disabled');
     }, []);
 
-    function nameCheck(name) {
-      const reg = /^[가-힣]{2,}$/;
-      if(!reg.test(name)) {
-        console.log('유효하지 않은 이름');
-      }
-    }
+    // function nameCheck(name) {
+    //   const reg = /^[가-힣]{2,}$/;
+    //   if(!reg.test(name)) {
+    //     console.log('유효하지 않은 이름');
+    //   }
+    // }
 
     function btnActive() {
         document.querySelector('.btn').removeAttribute('disabled');
@@ -37,7 +36,7 @@ export default function User() {
         "startDtm": Date.now()
       }
       console.log(params);
-      setParams(params);
+      props.paramsHandler(params);
     }
 
     return (
@@ -76,6 +75,4 @@ export default function User() {
           })} >검사시작</button>
         </>
     )
-
-    return params
 }

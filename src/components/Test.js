@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-// import jQuery from "jquery";
-// window.$ = window.jQuery = jQuery;
+
 import './Test.css';
 
-export default function Test() {
+export default function Test(props) {
     const [data, setData] = useState({data: []});
     const [num, setNum] = useState(1);
     const [answers, setAnswers] = useState("");
@@ -74,7 +73,6 @@ export default function Test() {
     function testData() {
         const form = document.getElementById('testForm');
         const inputs = form.querySelectorAll('input:checked');
-        //const vals = inputs.map((input)=>{console.log(input.input.value)})
         console.log(inputs);
         let sss = ""
         inputs.forEach((x)=>{sss += x.name+"="+x.value+" "});
@@ -116,6 +114,7 @@ export default function Test() {
 
         <button onClick={() => {
             testData();
+            props.answersHandler(testData());
             setAnswers(testData());
             console.log("answer state값", answers);
         }}>현재결과</button>

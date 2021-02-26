@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
-export default function Result(){
+export default function Result(props){
     const [seq, setSeq] = useState();
     
     const [name, setName] = useState("김쿠키");
@@ -44,6 +44,9 @@ export default function Result(){
     return(
         <>
         <h1>검사가 완료되었습니다!</h1>
+        
+        <p>{props.answers}</p>
+        
         <button onClick={()=>{
             console.log('결과보기');
             graph();
@@ -58,8 +61,8 @@ export default function Result(){
                         <th>검사일</th>
                     </tr>
                     <tr>
-                        <th>{name}</th>
-                        <th>{gender}</th>
+                        <th>{props.params.name}</th>
+                        <th>{props.params.gender}</th>
                         <td>{date}</td>
                     </tr>
                 </thead>
