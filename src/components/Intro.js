@@ -45,8 +45,8 @@ export default function Intro() {
                 <form className="answer" onChange={()=>{
                     btnActive();
                 }}>
-                    <label><input type="radio" />{answer1}</label>
-                    <label><input type="radio" />{answer2}</label>
+                    <label><input type="radio" name="sample" />{answer1}</label>
+                    <label><input type="radio" name="sample" />{answer2}</label>
                 </form>
             </div>
 
