@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 export default function User() {
     const [name, setName] = useState('');
     const [gender, setGender] = useState('');
+    const [params, setParams] = useState({});
     
     useEffect(() => {
       document.querySelector('.btn').setAttribute('disabled', 'disabled');
@@ -36,6 +37,7 @@ export default function User() {
         "startDtm": Date.now()
       }
       console.log(params);
+      setParams(params);
     }
 
     return (
@@ -74,4 +76,6 @@ export default function User() {
           })} >검사시작</button>
         </>
     )
+
+    return params
 }
