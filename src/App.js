@@ -7,8 +7,6 @@ import Test from './components/Test';
 import Completed from './components/Completed';
 import Result from './components/Result';
 
-import './App.css';
-
 function App() {
   const [params, setParams] = useState({});
   const [answers, setAnswers] = useState("");

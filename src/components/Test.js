@@ -1,11 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { Progress } from 'reactstrap';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 import './Test.css';
 
 export default function Test(props) {
     const [data, setData] = useState({data: []});
     const [num, setNum] = useState(1);
+    const [val, setVal] = useState(1);
 
     async function fetch() {
         const response = await axios.get('http://www.career.go.kr/inspct/openapi/test/questions?apikey=238b48bf19364a4f775ccd83b30d13b3&q=6')
@@ -80,10 +83,14 @@ export default function Test(props) {
 
     return(
         <>
+        <div>
+            <Progress value={val*10} max={100} /> 
+        </div>
+
         <h1>검사진행</h1>
 
         <br/>
-        
+
         <form id="testForm" onChange={()=>{
             const count = document.querySelectorAll('input:checked').length;
             console.log("count:", count);
@@ -92,6 +99,7 @@ export default function Test(props) {
             } else if (count === 28) {            
                 document.querySelector('.nextBtn').style.display = "none";
             }
+            //setVal(count);
         }}>
         <div className="group" id="group1">{qListMaker(group1)}</div>
         <div className="group" id="group2">{qListMaker(group2)}</div>

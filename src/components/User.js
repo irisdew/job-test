@@ -8,21 +8,17 @@ export default function User(props) {
       document.querySelector('.btn').setAttribute('disabled', 'disabled');
     }, []);
 
-    // function nameCheck(name) {
-    //   const reg = /^[가-힣]{2,}$/;
-    //   if(!reg.test(name)) {
-    //     console.log('유효하지 않은 이름');
-    //   }
-    // }
+    function checkName(name) {
+      const reg = /^[가-힣]{2,6}$/;
+      if(!reg.test(name)) {
+        alert('이름이 올바르지 않습니다');
+        return false;
+      }
+      return true;
+    }
 
     function btnActive() {
         document.querySelector('.btn').removeAttribute('disabled');
-        console.log('active');
-    }
-
-    function pageChanger() {
-      console.log('changing...');
-      window.location.href='#/intro'
     }
 
     function userData() {
@@ -46,9 +42,11 @@ export default function User(props) {
           <form className="name" onChange={()=>{
               const userName = document.querySelector('input[name="name"]').value;
               setName(userName);
-              if (gender !== '') {
-                btnActive();
-              }
+          }} onBlur={()=>{
+            checkName(name);
+            if (gender !== '' && checkName(name)) {
+              btnActive();
+            }
           }}> 
             <p>이름</p>
             <input name="name" type="text" />
@@ -57,7 +55,7 @@ export default function User(props) {
           <form className="gender" onChange={()=>{
               const userGender = document.querySelector('input[name="gender"]:checked').value;
               setGender(userGender)
-              if (name !== '') {
+              if (checkName(name)) {
                  btnActive();
               };
             }}>
@@ -70,7 +68,7 @@ export default function User(props) {
           <br/>
            
           <button type="button" className="btn" onClick={(()=>{
-            pageChanger();
+            window.location.href='#/intro';
             userData();
           })} >검사시작</button>
         </>

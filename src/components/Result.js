@@ -9,6 +9,7 @@ export default function Result(props){
     const [result, setResult] = useState({});
     const [wow, setWow] = useState([1, 3, 4, 5, 3, 5, 7, 1]);
     const [jobs, setJobs] = useState([]);
+    const [jobs2, setJobs2] = useState([]);
 
     async function fetch() {
         const url = "https://www.career.go.kr/inspct/openapi/test/report";
@@ -75,6 +76,19 @@ export default function Result(props){
             })
             setJobs(jobs);
         })
+
+        axios.get(job_major)
+        .then(response => {
+            console.log("job_major", response.data);
+            const jobs2 = response.data.map((job)=>{
+                return(
+                    <li key={job[0]}>{job[1]}</li>
+                )
+            })
+            setJobs2(jobs2);
+        })
+        
+        
 
     }
     
@@ -147,6 +161,8 @@ export default function Result(props){
             <h4>종사자 평균 학력별</h4>
             <ul>{jobs}</ul>
             <h4>종사자 평균 전공별</h4>
+            <ul>{jobs2}</ul>
+
 
         </div>
 
