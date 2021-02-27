@@ -73,7 +73,7 @@ export default function Result(props){
             console.log("job_school", response.data);
             response.data.map((job)=>{
                 return(
-                    <span key={job[0]}>{job[1]}</span>
+                    <li key={job[0]}>{job[1]}</li>
                 )
             })
             setJobs(jobs);
@@ -167,6 +167,7 @@ export default function Result(props){
 
             <div>
                 <h4 className="title">종사자 평균 학력별</h4>
+                <ul>{jobs}</ul>
                 <Table bordered>
                     <thead>
                         <tr>
@@ -243,7 +244,6 @@ export default function Result(props){
                         </tr>
                     </tbody>
                 </Table>
-                    <ul>{jobs2}</ul>
                 </div>
 
             <button onClick={()=>{window.location.href='#/';}}>다시 검사하기</button> 
