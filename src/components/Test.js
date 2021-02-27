@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Progress } from 'reactstrap';
-import 'bootstrap/dist/css/bootstrap.min.css';
 
 import './Test.css';
 import { Container } from 'react-bootstrap';
@@ -9,7 +8,7 @@ import { Container } from 'react-bootstrap';
 export default function Test(props) {
     const [data, setData] = useState({data: []});
     const [num, setNum] = useState(1);
-    const [val, setVal] = useState(1);
+    const [val, setVal] = useState(0);
     const [pageJustChanged, setPageJustChanged] = useState(false);
 
     async function fetch() {
@@ -27,7 +26,7 @@ export default function Test(props) {
         if (num === 1) {
             document.getElementById("group1").style.display = "block"
         } else if (num === 7) {
-            window.location.href='#/result'
+            window.location.href='#/completed';
         }
     }, [num]);
     
@@ -86,7 +85,7 @@ export default function Test(props) {
     return(
         <>
         <Container>
-            <Progress value={val*10} max={100} /> 
+            <Progress value={Math.round(val*3.57)} max={100} /> 
         </Container>
 
         <h1>검사진행</h1>

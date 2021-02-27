@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Bar } from 'react-chartjs-2';
+import { Container, Row, Col, Table } from 'reactstrap';
+
 
 import './Result.css'
 
@@ -9,7 +11,7 @@ export default function Result(props){
     const [result, setResult] = useState({});
     const [wow, setWow] = useState([1, 3, 4, 5, 3, 5, 7, 1]);
     const [jobs, setJobs] = useState([]);
-    const [jobs2, setJobs2] = useState([]);
+    const [jobs2, setJobs2] = useState("");
 
     async function fetch() {
         const url = "https://www.career.go.kr/inspct/openapi/test/report";
@@ -69,9 +71,9 @@ export default function Result(props){
         axios.get(job_school)
         .then(response => {
             console.log("job_school", response.data);
-            const jobs = response.data.map((job)=>{
+            response.data.map((job)=>{
                 return(
-                    <li key={job[0]}>{job[1]}</li>
+                    <span key={job[0]}>{job[1]}</span>
                 )
             })
             setJobs(jobs);
@@ -80,12 +82,13 @@ export default function Result(props){
         axios.get(job_major)
         .then(response => {
             console.log("job_major", response.data);
-            const jobs2 = response.data.map((job)=>{
-                return(
-                    <li key={job[0]}>{job[1]}</li>
-                )
+            let major2 = ""
+            response.data.forEach((job)=>{
+                if (job[2] === 2) {
+                    major2 = major2 + job[1]+" "
+                }
             })
-            setJobs2(jobs2);
+            setJobs2(major2);
         })
         
         
@@ -120,19 +123,15 @@ export default function Result(props){
 
 
     return(
-        <>
-        <h1>직업가치관검사 결과표</h1>
-        
-        <p>직업가치관이란 직업을 선택할 때 영향을 끼치는 자신만의 믿음과 신념입니다. 따라서 여러분의 직업생활과 관련하여 포기하지 않는 무게중심의 역할을 한다고 볼 수 있습니다. 직업가치관검사는 여러분이 직업을 선택할 때 상대적으로 어떠한 가치를 중요하게 생각하는지를 알려줍니다. 또한 본인이 가장 중요하게 생각하는 가치를 충족시켜줄 수 있는 직업에 대해 생각해 볼 기회를 제공합니다.</p>
-
-        <button onClick={()=>{
-            console.log('결과보기');
-            graph(seq);
-        }}>결과보기</button>
-
-        <h2>직업가치관 결과</h2>
-        <div>
-            <table>
+        <Container>
+            <h1 className="main title">직업가치관검사 결과표</h1>
+            
+            <p className="description">직업가치관이란 직업을 선택할 때 영향을 끼치는 자신만의 믿음과 신념입니다. <br/> 
+            여러분의 직업생활과 관련하여 포기하지 않는 무게중심의 역할을 한다고 볼 수 있습니다.<br/> 
+            직업가치관검사는 직업을 선택할 때 상대적으로 어떠한 가치를 중요하게 생각하는지를 알려줍니다.<br/> 
+            본인이 가장 중요하게 생각하는 가치를 충족시켜줄 수 있는 직업에 대해 생각해 볼 기회를 제공합니다.</p>
+            
+            <Table bordered>
                 <thead>
                     <tr>
                         <th>이름</th>
@@ -142,31 +141,112 @@ export default function Result(props){
                     <tr>
                         <th>{props.params.name}</th>
                         <th>{props.params.gender}</th>
-                        <td>{result.endDtm}</td>
+                        <td>{String(result.endDtm).substr(0, 10)}</td>
                     </tr>
                 </thead>
-            </table>
+            </Table>
 
-            <p>{props.answers}</p>
+            <h2 className="title">나의 직업 가치관</h2>
+
+            <p>직업생활과 관련하여 {props.params.name}님은
+            ""과 ""을 가장 중요하게 생각합니다. <br/>
+            반면에 ""과 ""을 상대적으로 덜 중요하게 생각합니다.
+            </p>
+
 
             <div className="chart">
-            <Bar 
-                data={data}
-                width={300}
-                height={200}
-                options={options}
-            />
+                <Bar 
+                    width={1000}
+                    height={600}
+                    data={data}
+                    options={options}
+                />
             </div>
-            <h2>나의 가치관과 관련이 높은 직업</h2>
-            <h4>종사자 평균 학력별</h4>
-            <ul>{jobs}</ul>
-            <h4>종사자 평균 전공별</h4>
-            <ul>{jobs2}</ul>
 
+            <h2 className="title">나의 가치관과 관련이 높은 직업</h2>
 
-        </div>
+            <div>
+                <h4 className="title">종사자 평균 학력별</h4>
+                <Table bordered>
+                    <thead>
+                        <tr>
+                            <th>학력</th>
+                            <th>직업명</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <th scope="row">중졸</th>
+                            <th>인문사회계열교수 직업군인 인문사회계열교수 변리사</th>
+                        </tr>
+                        <tr>
+                            <th scope="row">고졸</th>
+                            <th>인문사회계열교수 직업군인 인문사회계열교수 변리사</th>
+                        </tr>
+                        <tr>
+                            <th scope="row">전문대졸</th>
+                            <th>인문사회계열교수 직업군인 인문사회계열교수 변리사</th>
+                        </tr>
+                        <tr>
+                            <th scope="row">대졸</th>
+                            <th>인문사회계열교수 직업군인 인문사회계열교수 변리사</th>
+                        </tr>
+                        <tr>
+                            <th scope="row">대학원졸</th>
+                            <th>인문사회계열교수 직업군인 인문사회계열교수 변리사</th>
+                        </tr>
+                    </tbody>
+                </Table>
+                <ul>{jobs}</ul>    
+            </div>
+            <div>
+                <h4 className="title">종사자 평균 전공별</h4>
+                <Table bordered>
+                    <thead>
+                        <tr>
+                            <th>분야</th>
+                            <th>직업명</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <th scope="row">계열무관</th>
+                            <th>{jobs2}</th>
+                        </tr>
+                        <tr>
+                            <th scope="row">인문</th>
+                            <th>인문사회계열교수 직업군인 인문사회계열교수 변리사</th>
+                        </tr>
+                        <tr>
+                            <th scope="row">사회</th>
+                            <th>{jobs2}</th>
+                        </tr>
+                        <tr>
+                            <th scope="row">교육</th>
+                            <th>인문사회계열교수 직업군인 인문사회계열교수 변리사</th>
+                        </tr>
+                        <tr>
+                            <th scope="row">공학</th>
+                            <th>인문사회계열교수 직업군인 인문사회계열교수 변리사</th>
+                        </tr>
+                        <tr>
+                            <th scope="row">자연</th>
+                            <th>인문사회계열교수 직업군인 인문사회계열교수 변리사</th>
+                        </tr>
+                        <tr>
+                            <th scope="row">의학</th>
+                            <th>인문사회계열교수 직업군인 인문사회계열교수 변리사</th>
+                        </tr>
+                        <tr>
+                            <th scope="row">예체능</th>
+                            <th>인문사회계열교수 직업군인 인문사회계열교수 변리사</th>
+                        </tr>
+                    </tbody>
+                </Table>
+                    <ul>{jobs2}</ul>
+                </div>
 
-        <button onClick={()=>{window.location.href='#/result';}}>다시 검사하기</button> 
-        </>
+            <button onClick={()=>{window.location.href='#/';}}>다시 검사하기</button> 
+        </Container>
     )
 }
