@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-export default function User() {
+export default function User(props) {
     const [name, setName] = useState('');
     const [gender, setGender] = useState('');
     
@@ -8,12 +8,12 @@ export default function User() {
       document.querySelector('.btn').setAttribute('disabled', 'disabled');
     }, []);
 
-    function nameCheck(name) {
-      const reg = /^[가-힣]{2,}$/;
-      if(!reg.test(name)) {
-        console.log('유효하지 않은 이름');
-      }
-    }
+    // function nameCheck(name) {
+    //   const reg = /^[가-힣]{2,}$/;
+    //   if(!reg.test(name)) {
+    //     console.log('유효하지 않은 이름');
+    //   }
+    // }
 
     function btnActive() {
         document.querySelector('.btn').removeAttribute('disabled');
@@ -36,6 +36,7 @@ export default function User() {
         "startDtm": Date.now()
       }
       console.log(params);
+      props.paramsHandler(params);
     }
 
     return (
