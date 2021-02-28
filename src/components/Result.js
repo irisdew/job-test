@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Bar } from 'react-chartjs-2';
-import { Container, Row, Col, Table } from 'reactstrap';
+import { Container, Table } from 'reactstrap';
 
 
 import './Result.css'

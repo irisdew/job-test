@@ -12,7 +12,7 @@ export default function Test(props) {
     const [pageJustChanged, setPageJustChanged] = useState(false);
 
     async function fetch() {
-        const response = await axios.get('http://www.career.go.kr/inspct/openapi/test/questions?apikey=238b48bf19364a4f775ccd83b30d13b3&q=6')
+        const response = await axios.get('http://www.career.go.kr/inspct/openapi/test/questions?apikey=238b48bf19364a4f775ccd83b30d13b3&q=6');
         const data = response.data.RESULT;
         console.log(data);
         setData({ data: data });
@@ -20,7 +20,7 @@ export default function Test(props) {
     
     useEffect(() => {
         fetch();
-    }, [num]);
+    }, []);
 
     useEffect(() => {
         if (num === 1) {
@@ -88,7 +88,7 @@ export default function Test(props) {
             <Progress value={Math.round(val*3.57)} max={100} /> 
         </Container>
 
-        <h1>검사진행</h1>
+        <h1 className="title">검사진행</h1>
 
         <br/>
 
@@ -113,6 +113,7 @@ export default function Test(props) {
 
         <button onClick={() => {
             showPrevQList(num);
+            setPageJustChanged(false);
         }}>이전</button>
         
         <button
@@ -133,7 +134,7 @@ export default function Test(props) {
         <button onClick={() => {
             testData();
             props.answersHandler(testData());
-            window.location.href='#/result';
+            window.location.href='#/completed';
         }}>검사완료</button>
         </>
     );

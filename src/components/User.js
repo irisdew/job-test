@@ -1,13 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
+import { Button } from 'reactstrap';
 
 export default function User(props) {
     const [name, setName] = useState('');
     const [gender, setGender] = useState('');
     
-    useEffect(() => {
-      document.querySelector('.btn').setAttribute('disabled', 'disabled');
-    }, []);
-
     function checkName(name) {
       const reg = /^[가-힣]{2,6}$/;
       if(!reg.test(name)) {
@@ -15,10 +12,6 @@ export default function User(props) {
         return false;
       }
       return true;
-    }
-
-    function btnActive() {
-        document.querySelector('.btn').removeAttribute('disabled');
     }
 
     function userData() {
@@ -35,18 +28,19 @@ export default function User(props) {
       props.paramsHandler(params);
     }
 
+    const condition = gender !== '' && checkName(name);
+
+    var btnColor = condition ? "primary" : "secondary";
+
     return (
         <>
-        <h1>직업가치관검사</h1>
+        <h1 className="title">직업가치관검사</h1>
         
           <form className="name" onChange={()=>{
               const userName = document.querySelector('input[name="name"]').value;
               setName(userName);
           }} onBlur={()=>{
             checkName(name);
-            if (gender !== '' && checkName(name)) {
-              btnActive();
-            }
           }}> 
             <p>이름</p>
             <input name="name" type="text" />
@@ -55,9 +49,6 @@ export default function User(props) {
           <form className="gender" onChange={()=>{
               const userGender = document.querySelector('input[name="gender"]:checked').value;
               setGender(userGender)
-              if (checkName(name)) {
-                 btnActive();
-              };
             }}>
             <p>성별</p>
             <label><input type="radio" name="gender" value="100323"/>남자</label>
@@ -66,11 +57,11 @@ export default function User(props) {
           </form>
 
           <br/>
-           
-          <button type="button" className="btn" onClick={(()=>{
+
+          <Button color={btnColor} size="lg" disabled={!(condition)} className="btn" onClick={(()=>{
             window.location.href='#/intro';
             userData();
-          })} >검사시작</button>
+          })}>검사시작</Button>{' '} 
         </>
     )
 }
