@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Bar } from 'react-chartjs-2';
-import { Container, Table } from 'reactstrap';
+import { Container, Table, Button } from 'reactstrap';
 
 import './Result.css'
 
@@ -142,6 +142,18 @@ export default function Result(props){
         return jobsList.map((job) => <a href={jobBaseURL+job[0]} rel='noreferrer' target="_blank">{job[1]}</a>)
     }
 
+    function showJobs(listName) {
+        let condition = true;
+        if (listName === undefined) {
+            condition = false; 
+        } else {
+            if (listName.length === 0) {
+                condition = false;
+            }
+        }
+        return condition ? paintJobs(listName): "결과없음"
+    }
+
     return(
         <Container>
             <h1 className="main title">직업가치관검사 결과표</h1>
@@ -197,23 +209,23 @@ export default function Result(props){
                     <tbody>
                         <tr>
                             <th scope="row">중졸</th>
-                            <th>{school[1]}</th>
+                            <th>{showJobs(school[1])}</th>
                         </tr>
                         <tr>
                             <th scope="row">고졸</th>
-                            <th>{school[2]}</th>
+                            <th>{showJobs(school[2])}</th>
                         </tr>
                         <tr>
                             <th scope="row">전문대졸</th>
-                            <th>{school[3]}</th>
+                            <th>{showJobs(school[3])}</th>
                         </tr>
                         <tr>
                             <th scope="row">대졸</th>
-                            <th>{school[4]}</th>
+                            <th>{showJobs(school[4])}</th>
                         </tr>
                         <tr>
                             <th scope="row">대학원졸</th>
-                            <th>{school[5]}</th>
+                            <th>{showJobs(school[5])}</th>
                         </tr>
                     </tbody>
                 </Table>
@@ -230,41 +242,41 @@ export default function Result(props){
                     <tbody>
                         <tr>
                             <th scope="row">계열무관</th>
-                            <th>{major[0]}</th>
+                            <th>{showJobs(major[0])}</th>
                         </tr>
                         <tr>
                             <th scope="row">인문</th>
-                            <th>{major[1]}</th>
+                            <th>{showJobs(major[1])}</th>
                         </tr>
                         <tr>
                             <th scope="row">사회</th>
-                            <th>{major[2]}</th>
+                            <th>{showJobs(major[2])}</th>
                         </tr>
                         <tr>
                             <th scope="row">교육</th>
-                            <th>{major[3]}</th>
+                            <th>{showJobs(major[3])}</th>
                         </tr>
                         <tr>
                             <th scope="row">공학</th>
-                            <th>{major[4]}</th>
+                            <th>{showJobs(major[4])}</th>
                         </tr>
                         <tr>
                             <th scope="row">자연</th>
-                            <th>{major[5]}</th>
+                            <th>{showJobs(major[5])}</th>
                         </tr>
                         <tr>
                             <th scope="row">의학</th>
-                            <th>{major[6]}</th>
+                            <th>{showJobs(major[6])}</th>
                         </tr>
                         <tr>
                             <th scope="row">예체능</th>
-                            <th>{major[7]}</th>
+                            <th>{showJobs(major[7])}</th>
                         </tr>
                     </tbody>
                 </Table>
                 </div>
 
-            <button onClick={()=>{window.location.href='#/';}}>다시 검사하기</button> 
+            <Button color="primary" size="lg"onClick={()=>{window.location.href='#/';}}>다시 검사하기</Button> 
         </Container>
     )
 }

@@ -3,7 +3,6 @@ import axios from 'axios';
 import { Container, Button } from 'reactstrap';
 
 import { Progress } from 'reactstrap';
-import 'bootstrap/dist/css/bootstrap.min.css';
 
 export default function Intro() {
     const [question, setQuestion] = useState();
@@ -24,7 +23,7 @@ export default function Intro() {
         fetch();
     }, []);
 
-    var btnColor = btnActive ? "primary" : "secondary";
+    const btnColor = btnActive ? "primary" : "secondary";
 
     return (
         <div>
