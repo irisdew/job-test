@@ -1,18 +1,20 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { Progress } from 'reactstrap';
+import { Progress, Button } from 'reactstrap';
 
 import './Test.css';
 import { Container } from 'react-bootstrap';
 
 export default function Test(props) {
     const [data, setData] = useState({data: []});
-    const [num, setNum] = useState(1);
-    const [val, setVal] = useState(0);
-    const [pageJustChanged, setPageJustChanged] = useState(false);
+    const [pageNum, setPageNum] = useState(1);
+    const [count, setCount] = useState(0);
+    const [isDone, setIsDone] = useState(false); 
+    
+    const [condition, setCondition] = useState(false);
 
     async function fetch() {
-        const response = await axios.get('http://www.career.go.kr/inspct/openapi/test/questions?apikey=238b48bf19364a4f775ccd83b30d13b3&q=6')
+        const response = await axios.get('http://www.career.go.kr/inspct/openapi/test/questions?apikey=238b48bf19364a4f775ccd83b30d13b3&q=6');
         const data = response.data.RESULT;
         console.log(data);
         setData({ data: data });
@@ -20,15 +22,13 @@ export default function Test(props) {
     
     useEffect(() => {
         fetch();
-    }, [num]);
+    }, []);
 
     useEffect(() => {
-        if (num === 1) {
+        if (pageNum === 1) {
             document.getElementById("group1").style.display = "block"
-        } else if (num === 7) {
-            window.location.href='#/completed';
-        }
-    }, [num]);
+        } 
+    }, [pageNum]);
     
     const group1 = data.data.slice(0, 5);
     const group2 = data.data.slice(5, 10);
@@ -41,7 +41,7 @@ export default function Test(props) {
         const qList = group.map((d) => {
             return(
                 <div key={d.qitemNo} id="question"> 
-                  <li key={d.qitemNo}>{d.qitemNo} {d.question}</li>
+                  <p key={d.qitemNo}>{d.qitemNo}. {d.question}</p>
                   <label><input type="radio" name={"B"+d.qitemNo} value={d.answerScore01}/>{d.answer01}</label> &ensp;&ensp;&ensp;&ensp;
                   <label><input type="radio" name={"B"+d.qitemNo} value={d.answerScore02}/>{d.answer02}</label>
               </div>
@@ -50,24 +50,20 @@ export default function Test(props) {
         return qList
     }
     
-    function showNextQList(num) {
-        if (num > 5) {
-            window.location.href='#/result'
-        } else {
-            setNum(num+1);
-            document.getElementById(`group${num}`).style.display = "none";
-            document.getElementById(`group${num+1}`).style.display = "block";
-        }
+    function showNextQList(pageNum) {
+            setPageNum(pageNum+1);
+            document.getElementById(`group${pageNum}`).style.display = "none";
+            document.getElementById(`group${pageNum+1}`).style.display = "block";
     }
 
-    function showPrevQList(num) {
-        setNum(num-1);
-        console.log(num);
-        if (num < 2) {
+    function showPrevQList(pageNum) {
+        setPageNum(pageNum-1);
+        console.log(pageNum);
+        if (pageNum < 2) {
             window.location.href='#/intro'
         } else {
-            document.getElementById(`group${num}`).style.display = "none";
-            document.getElementById(`group${num-1}`).style.display = "block";
+            document.getElementById(`group${pageNum}`).style.display = "none";
+            document.getElementById(`group${pageNum-1}`).style.display = "block";
         }
     }
     
@@ -85,7 +81,7 @@ export default function Test(props) {
     return(
         <>
         <Container>
-            <Progress value={Math.round(val*3.57)} max={100} /> 
+            <Progress value={Math.round(count*3.57)} max={100} /> 
         </Container>
 
         <h1>검사진행</h1>
@@ -93,14 +89,21 @@ export default function Test(props) {
         <br/>
 
         <form id="testForm" onChange={()=>{
-            const count = document.querySelectorAll('input:checked').length;
-            console.log("count:", count);
-            setVal(count);
-            if (count % 5 === 1) {
-                setPageJustChanged(false);
+            const currentChecked = document.querySelectorAll('input:checked').length;
+            console.log("count:", currentChecked);
+            setCount(currentChecked);
+            if (currentChecked % 5 === 0) {
+                setIsDone(true);
+            } else if (currentChecked === 28) {
+                console.log('count 28');
+                setCondition(true);
             }
         }}>
-        <div className="group" id="group1">{qListMaker(group1)}</div>
+        <div className="group" id="group1" onChange={()=>{
+            if (document.querySelectorAll('input:checked').length === 5) {
+                setIsDone(true);
+            }
+        }}>{qListMaker(group1)}</div>
         <div className="group" id="group2">{qListMaker(group2)}</div>
         <div className="group" id="group3">{qListMaker(group3)}</div>
         <div className="group" id="group4">{qListMaker(group4)}</div>
@@ -111,30 +114,27 @@ export default function Test(props) {
 
         <br/>
 
-        <button onClick={() => {
-            showPrevQList(num);
-        }}>이전</button>
+        <Button color="primary" onClick={() => {
+            showPrevQList(pageNum);
+            setIsDone(true);
+        }}>이전</Button>
         
-        <button
-            className="nextBtn"
+        <Button
+            color={(count !== 0 && isDone) ? "primary" : "secondary"} 
+            className={!(condition && pageNum === 6) ? "show": "hide"}
             onClick={() => {
-                console.log(num);
-                showNextQList(num);
-                setPageJustChanged(true);
+                console.log(pageNum);
+                showNextQList(pageNum);
+                setIsDone(false);
             }}
-            // if (count % 5 === 0) {
-            //     document.querySelector('.nextBtn').removeAttribute('disabled');
-            // } else if (count === 28) {            
-            //     document.querySelector('.nextBtn').style.display = "none";
-            // }
-            disabled={!(val % 5 === 0 && pageJustChanged === false)}
-        >다음</button>
+            disabled={!(count !== 0 && isDone)}
+        >다음</Button>
 
-        <button onClick={() => {
+        <Button color="primary" className={(condition && pageNum === 6) ? "show": "hide"} onClick={() => {
             testData();
             props.answersHandler(testData());
-            window.location.href='#/result';
-        }}>검사완료</button>
+            window.location.href='#/completed';
+        }}>완료</Button>
         </>
     );
 }

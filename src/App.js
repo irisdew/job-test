@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { HashRouter, Route } from "react-router-dom";
 import 'bootstrap/dist/css/bootstrap.min.css';
 
+import './App.css';
+
 import User from './components/User';
 import Intro from './components/Intro';
 import Test from './components/Test';
