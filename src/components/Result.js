@@ -9,7 +9,8 @@ export default function Result(props){
 
     const [endDtm, setEndDtm] = useState();
     const [graphData, setGraphData] = useState([3, 1, 7, 5, 3, 1, 4, 2])
-    const [jobs, setJobs] = useState();
+    const [school, setSchool] = useState([]);
+    const [major, setMajor] = useState([]);
 
     function fetch() {
         console.log("0. props:", props.params);
@@ -65,9 +66,6 @@ export default function Result(props){
             console.log("9. rank1, rank2:", rank1, rank2);
 
             getJobs(rank1, rank2);
-
-
-
         })
     }
 
@@ -92,6 +90,7 @@ export default function Result(props){
             }
 
             console.log("11-1. school:", school);
+            setSchool(school);
         })
 
         axios.get(job_major)
@@ -107,6 +106,7 @@ export default function Result(props){
             }
 
             console.log("11-2. major:", major);
+            setMajor(major);
         })
     }
 
@@ -137,6 +137,10 @@ export default function Result(props){
         maintainAspectRatio: false
     }
 
+    function paintJobs(jobsList) {
+        const jobBaseURL = 'https://www.career.go.kr/cnet/front/base/job/jobView.do?SEQ=';
+        return jobsList.map((job) => <a href={jobBaseURL+job[0]} rel='noreferrer' target="_blank">{job[1]}</a>)
+    }
 
     return(
         <Container>
@@ -183,7 +187,6 @@ export default function Result(props){
 
             <div>
                 <h4 className="title">종사자 평균 학력별</h4>
-                <ul>{jobs}</ul>
                 <Table bordered>
                     <thead>
                         <tr>
@@ -194,27 +197,26 @@ export default function Result(props){
                     <tbody>
                         <tr>
                             <th scope="row">중졸</th>
-                            <th>인문사회계열교수 직업군인 인문사회계열교수 변리사</th>
+                            <th>{school[1]}</th>
                         </tr>
                         <tr>
                             <th scope="row">고졸</th>
-                            <th>인문사회계열교수 직업군인 인문사회계열교수 변리사</th>
+                            <th>{school[2]}</th>
                         </tr>
                         <tr>
                             <th scope="row">전문대졸</th>
-                            <th>인문사회계열교수 직업군인 인문사회계열교수 변리사</th>
+                            <th>{school[3]}</th>
                         </tr>
                         <tr>
                             <th scope="row">대졸</th>
-                            <th>인문사회계열교수 직업군인 인문사회계열교수 변리사</th>
+                            <th>{school[4]}</th>
                         </tr>
                         <tr>
                             <th scope="row">대학원졸</th>
-                            <th>인문사회계열교수 직업군인 인문사회계열교수 변리사</th>
+                            <th>{school[5]}</th>
                         </tr>
                     </tbody>
                 </Table>
-                <ul>{jobs}</ul>    
             </div>
             <div>
                 <h4 className="title">종사자 평균 전공별</h4>
@@ -228,35 +230,35 @@ export default function Result(props){
                     <tbody>
                         <tr>
                             <th scope="row">계열무관</th>
-                            <th>asfsdf</th>
+                            <th>{major[0]}</th>
                         </tr>
                         <tr>
                             <th scope="row">인문</th>
-                            <th>인문사회계열교수 직업군인 인문사회계열교수 변리사</th>
+                            <th>{major[1]}</th>
                         </tr>
                         <tr>
                             <th scope="row">사회</th>
-                            <th>asdfasdf</th>
+                            <th>{major[2]}</th>
                         </tr>
                         <tr>
                             <th scope="row">교육</th>
-                            <th>인문사회계열교수 직업군인 인문사회계열교수 변리사</th>
+                            <th>{major[3]}</th>
                         </tr>
                         <tr>
                             <th scope="row">공학</th>
-                            <th>인문사회계열교수 직업군인 인문사회계열교수 변리사</th>
+                            <th>{major[4]}</th>
                         </tr>
                         <tr>
                             <th scope="row">자연</th>
-                            <th>인문사회계열교수 직업군인 인문사회계열교수 변리사</th>
+                            <th>{major[5]}</th>
                         </tr>
                         <tr>
                             <th scope="row">의학</th>
-                            <th>인문사회계열교수 직업군인 인문사회계열교수 변리사</th>
+                            <th>{major[6]}</th>
                         </tr>
                         <tr>
                             <th scope="row">예체능</th>
-                            <th>인문사회계열교수 직업군인 인문사회계열교수 변리사</th>
+                            <th>{major[7]}</th>
                         </tr>
                     </tbody>
                 </Table>
