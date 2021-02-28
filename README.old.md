@@ -18,3 +18,11 @@
 ----
 
 * VM 연결하기 ( 두렵다.. )
+
+### 0228 코드리뷰 내용 중 반영 아직 안한 것!
+~~~
+window.location.href로 url을 직접 변경해주는 것 보다
+react-router-dom의 history를 이용하여 이동하는 것이 더 효율적이랍니다.
+https://velog.io/@yiyb0603/React-Router-dom%EC%9D%98-%EC%9C%A0%EC%9A%A9%ED%95%9C-hooks%EB%93%A4
+이 아티클을 참고해주세요.
+~~~
