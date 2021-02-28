@@ -19,13 +19,11 @@
 
 .title{
     font-family: 'TmoneyRoundWindExtraBold';
-    margin-top: 50px;
-    margin-bottom: 30px;
 }
 
 h1{
-    margin-top: 50px;
-    margin-bottom: 30px;
+    /* margin-top: 50px;
+    margin-bottom: 30px; */
 }
 
 .description {

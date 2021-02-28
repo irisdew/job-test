@@ -30,7 +30,7 @@ export default function User(props) {
 
     const condition = gender !== '' && checkName(name);
 
-    var btnColor = condition ? "primary" : "secondary";
+    const btnColor = condition ? "primary" : "secondary";
 
     return (
         <>
