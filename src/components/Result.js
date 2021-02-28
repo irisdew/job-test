@@ -3,18 +3,18 @@ import axios from 'axios';
 import { Bar } from 'react-chartjs-2';
 import { Container, Table } from 'reactstrap';
 
-
 import './Result.css'
 
 export default function Result(props){
-    const [seq, setSeq] = useState();
-    const [result, setResult] = useState({});
-    const [wow, setWow] = useState([1, 3, 4, 5, 3, 5, 7, 1]);
-    const [jobs, setJobs] = useState([]);
-    const [jobs2, setJobs2] = useState("");
 
-    async function fetch() {
-        const url = "https://www.career.go.kr/inspct/openapi/test/report";
+    const [endDtm, setEndDtm] = useState();
+    const [graphData, setGraphData] = useState([3, 1, 7, 5, 3, 1, 4, 2])
+    const [jobs, setJobs] = useState();
+
+    function fetch() {
+        console.log("0. props:", props.params);
+
+        const postURL = "https://www.career.go.kr/inspct/openapi/test/report";
         const data = {
             "apikey": "238b48bf19364a4f775ccd83b30d13b3",
             "qestrnSeq": "6",
@@ -25,82 +25,98 @@ export default function Result(props){
             "startDtm": props.params.startDtm,
             "answers": props.answers
           }
-        axios.post(url, data)
+
+        axios.post(postURL, data)
         .then((response) => {
-            console.log("web-result:", response.data.RESULT.url)
+            console.log("1. webResult:", response.data.RESULT.url)
             const seq= response.data.RESULT.url.split('=')[1];
-            console.log(seq);
-            graph(seq);
+            console.log("2. seq:", seq);
+            
+            getGraph(seq);
         })
     }
     
-    async function graph(seq) {
-        const resultURL = 'https://inspct.career.go.kr/inspct/api/psycho/report?seq=' + seq;
-        // console.log(resultURL);
-        axios.get(resultURL)
+    function getGraph(seq) {
+        const jsonResult = 'https://inspct.career.go.kr/inspct/api/psycho/report?seq=' + seq;
+        console.log("3. jsonResult-url:", jsonResult);
+
+        axios.get(jsonResult)
         .then(response => {
-            console.log(response);
-            console.log(response.data.result);
-            setResult(response.data.result);
-            const result = response.data.result;
-            console.log(result.wonScore.split(' '))
-            const wow = result.wonScore.split(' ').map((word) => {return parseInt(word.split('=')[1]);});
-            wow.pop();
-            console.log("wow", wow)
-            setWow(wow);
+            console.log("4. jsonResult-response:", response);
+            console.log("5. endDtm:", response.data.result.endDtm);
+            setEndDtm(response.data.result.endDtm)
+            const score = response.data.result.wonScore;
+            console.log("6. score:", score.split(' '));
+            const graphData = score.split(' ').map((word) => {return parseInt(word.split('=')[1]);});
+            graphData.pop();
+            console.log("7. graphData:", graphData);
+            setGraphData(graphData);
+
+            const maxScore = Array.from(new Set(graphData.slice().sort())).reverse();
+            console.log("8. rank", maxScore);
+            const rank1 = graphData.indexOf(maxScore[0])+1;
+            const sameScoreCheck = graphData.indexOf(maxScore[0], rank1)
+            let rank2 = null;
+            if (sameScoreCheck !== -1) {
+                rank2 = sameScoreCheck+1;
+            } else {
+                rank2 = graphData.indexOf(maxScore[1])+1;
+            }
+            console.log("9. rank1, rank2:", rank1, rank2);
+
+            getJobs(rank1, rank2);
+
+
+
         })
     }
 
     useEffect(() => {
-        console.log(props.params);
         fetch();
-        getJobs();
     }, []);
     
-    const rank = wow.slice().sort();
-    console.log("rank", rank);
-    const rank1 = wow.indexOf(rank[7])+1;
-    const rank2 = wow.indexOf(rank[6])+1;
-    console.log("rank1", rank1);
-    console.log("rank2", rank2);
-
-    function getJobs() {
+    function getJobs(rank1, rank2) {
         const job_school = `https://inspct.career.go.kr/inspct/api/psycho/value/jobs?no1=${rank1}&no2=${rank2}`
         const job_major = `https://inspct.career.go.kr/inspct/api/psycho/value/majors?no1=${rank1}&no2=${rank2}`
 
         axios.get(job_school)
         .then(response => {
-            console.log("job_school", response.data);
-            response.data.map((job)=>{
-                return(
-                    <li key={job[0]}>{job[1]}</li>
-                )
-            })
-            setJobs(jobs);
+            console.log("10-1. job_school:", response.data);
+            
+            let school = []
+            
+            for (let i=0; i<6; i++) {
+                school.push(response.data.filter((x) => {
+                    return x[2] === i;
+                }));  
+            }
+
+            console.log("11-1. school:", school);
         })
 
         axios.get(job_major)
         .then(response => {
-            console.log("job_major", response.data);
-            let major2 = ""
-            response.data.forEach((job)=>{
-                if (job[2] === 2) {
-                    major2 = major2 + job[1]+" "
-                }
-            })
-            setJobs2(major2);
-        })
-        
-        
+            console.log("10-2. job_major:", response.data);
 
+            let major = []
+            
+            for (let i=0; i<8; i++) {
+                major.push(response.data.filter((x) => {
+                    return x[2] === i;
+                }));  
+            }
+
+            console.log("11-2. major:", major);
+        })
     }
-    
+
+
     const data = {
         labels: ['능력발휘', '자율성', '보수', '안정성', '사회적 인정', '사회봉사', '자기계발', '창의성'],
         datasets: [
             {
                 borderWidth: 0,
-                data: wow,
+                data: graphData,
                 backgroundColor: ["#f3a683", "#f5cd79", "#f8a5c2", "#63cdda", "#778beb", "#e77f67", "#b8e994", "#ea8685"]
             }
         ]
@@ -141,7 +157,7 @@ export default function Result(props){
                     <tr>
                         <th>{props.params.name}</th>
                         <th>{props.params.gender}</th>
-                        <td>{String(result.endDtm).substr(0, 10)}</td>
+                        <td>{String(endDtm).substr(0, 10)}</td>
                     </tr>
                 </thead>
             </Table>
@@ -212,7 +228,7 @@ export default function Result(props){
                     <tbody>
                         <tr>
                             <th scope="row">계열무관</th>
-                            <th>{jobs2}</th>
+                            <th>asfsdf</th>
                         </tr>
                         <tr>
                             <th scope="row">인문</th>
@@ -220,7 +236,7 @@ export default function Result(props){
                         </tr>
                         <tr>
                             <th scope="row">사회</th>
-                            <th>{jobs2}</th>
+                            <th>asdfasdf</th>
                         </tr>
                         <tr>
                             <th scope="row">교육</th>

@@ -9,8 +9,7 @@ export default function Test(props) {
     const [data, setData] = useState({data: []});
     const [pageNum, setPageNum] = useState(1);
     const [count, setCount] = useState(0);
-    const [isDone, setIsDone] = useState(false);
-    // const [pageJustChanged, setPageJustChanged] = useState(false);
+    const [isDone, setIsDone] = useState(false); 
     
     const [condition, setCondition] = useState(false);
 
@@ -52,13 +51,9 @@ export default function Test(props) {
     }
     
     function showNextQList(pageNum) {
-        // if (pageNum > 5) {
-        //     document.querySelector('.finished').style.display = "block";
-        // } else {
             setPageNum(pageNum+1);
             document.getElementById(`group${pageNum}`).style.display = "none";
             document.getElementById(`group${pageNum+1}`).style.display = "block";
-        // }
     }
 
     function showPrevQList(pageNum) {
@@ -121,7 +116,6 @@ export default function Test(props) {
 
         <Button color="primary" onClick={() => {
             showPrevQList(pageNum);
-            // setPageJustChanged(false);
             setIsDone(true);
         }}>이전</Button>
         
@@ -131,11 +125,9 @@ export default function Test(props) {
             onClick={() => {
                 console.log(pageNum);
                 showNextQList(pageNum);
-                // setPageJustChanged(true);
                 setIsDone(false);
             }}
             disabled={!(count !== 0 && isDone)}
-            // disabled={!(val % 5 === 0 && pageJustChanged === false)}
         >다음</Button>
 
         <Button color="primary" className={(condition && pageNum === 6) ? "show": "hide"} onClick={() => {
