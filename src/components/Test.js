@@ -8,7 +8,8 @@ import { Container } from 'react-bootstrap';
 export default function Test(props) {
     const [data, setData] = useState({data: []});
     const [pageNum, setPageNum] = useState(1);
-    const [val, setVal] = useState(0);
+    const [count, setCount] = useState(0);
+    const [isDone, setIsDone] = useState(false);
     // const [pageJustChanged, setPageJustChanged] = useState(false);
     
     const [condition, setCondition] = useState(false);
@@ -85,7 +86,7 @@ export default function Test(props) {
     return(
         <>
         <Container>
-            <Progress value={Math.round(val*3.57)} max={100} /> 
+            <Progress value={Math.round(count*3.57)} max={100} /> 
         </Container>
 
         <h1>검사진행</h1>
@@ -93,17 +94,21 @@ export default function Test(props) {
         <br/>
 
         <form id="testForm" onChange={()=>{
-            const count = document.querySelectorAll('input:checked').length;
-            console.log("count:", count);
-            setVal(count);
-            if (count % 5 === 1) {
-                // setPageJustChanged(false);
-            } else if (count === 28) {
+            const currentChecked = document.querySelectorAll('input:checked').length;
+            console.log("count:", currentChecked);
+            setCount(currentChecked);
+            if (currentChecked % 5 === 0) {
+                setIsDone(true);
+            } else if (currentChecked === 28) {
                 console.log('count 28');
                 setCondition(true);
             }
         }}>
-        <div className="group" id="group1">{qListMaker(group1)}</div>
+        <div className="group" id="group1" onChange={()=>{
+            if (document.querySelectorAll('input:checked').length === 5) {
+                setIsDone(true);
+            }
+        }}>{qListMaker(group1)}</div>
         <div className="group" id="group2">{qListMaker(group2)}</div>
         <div className="group" id="group3">{qListMaker(group3)}</div>
         <div className="group" id="group4">{qListMaker(group4)}</div>
@@ -117,21 +122,23 @@ export default function Test(props) {
         <Button color="primary" onClick={() => {
             showPrevQList(pageNum);
             // setPageJustChanged(false);
+            setIsDone(true);
         }}>이전</Button>
         
         <Button
-            color={(val % 5 === 0 && val !== 0) ? "primary" : "secondary"} 
-            className={!(condition) ? "show": "hide"}
+            color={(count !== 0 && isDone) ? "primary" : "secondary"} 
+            className={!(condition && pageNum === 6) ? "show": "hide"}
             onClick={() => {
                 console.log(pageNum);
                 showNextQList(pageNum);
                 // setPageJustChanged(true);
+                setIsDone(false);
             }}
-            disabled={!(val % 5 === 0 && val !== 0)}
+            disabled={!(count !== 0 && isDone)}
             // disabled={!(val % 5 === 0 && pageJustChanged === false)}
         >다음</Button>
 
-        <Button color="primary" className={condition ? "show": "hide"} onClick={() => {
+        <Button color="primary" className={(condition && pageNum === 6) ? "show": "hide"} onClick={() => {
             testData();
             props.answersHandler(testData());
             window.location.href='#/completed';
