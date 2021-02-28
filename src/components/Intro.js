@@ -1,18 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { Container, Button } from 'reactstrap';
 
 import { Progress } from 'reactstrap';
-import 'bootstrap/dist/css/bootstrap.min.css';
 
 export default function Intro() {
     const [question, setQuestion] = useState();
     const [answer1, setAnswer1] = useState();
     const [answer2, setAnswer2] = useState();
-
-    function btnActive() {
-        document.querySelector('.btn2').removeAttribute('disabled');
-        console.log('active')
-    }
+    const [btnActive, setBtnActive] = useState(false);
 
     async function fetch() {
         const response = await axios.get('http://www.career.go.kr/inspct/openapi/test/questions?apikey=238b48bf19364a4f775ccd83b30d13b3&q=6')
@@ -25,21 +21,22 @@ export default function Intro() {
 
     useEffect(() => {
         fetch();
-        document.querySelector('.btn2').setAttribute('disabled', 'disabled');
     }, []);
+
+    const btnColor = btnActive ? "primary" : "secondary";
 
     return (
         <div>
 
-            <div>
+            <Container>
                 <Progress value={0} max={100} /> 
-            </div>
+            </Container>
 
-            <h1>검사예시</h1>
+            <h1 className="title">검사예시</h1>
 
             <p>직업과 관련된 가치 중에서 자기에게 더 중요한 가치에 표시하세요.</p>
 
-            <article className="valueList">
+            {/* <article className="valueList">
                 <h4>가치</h4>
                 <p>능력발휘 : 직업을 통해 자신의 능력을 발휘하는 것입니다.</p>
                 <p>자율성 : 일하는 시간과 방식에 대해서 스스로 결정할 수 있는 것입니다</p>
@@ -53,7 +50,7 @@ export default function Intro() {
                 <p>사회적 인정 : 내가 한 일을 다른 사람에게 인정받는 것입니다</p>
 
                 <p>자기계발 : 직업을 통해 더 배우고 발전할 기회가 있는 것입니다</p>
-            </article>
+            </article> */}
 
             <div className="sample">
                 <p className='question'>
@@ -61,7 +58,7 @@ export default function Intro() {
                 </p>
 
                 <form className="answer" onChange={()=>{
-                    btnActive();
+                    setBtnActive(true);
                 }}>
                     <label><input type="radio" name="sample" />{answer1}</label>
                     <label><input type="radio" name="sample" />{answer2}</label>
@@ -70,9 +67,9 @@ export default function Intro() {
 
             <br/>
 
-            <button className="btn2" onClick={() => {
+            <Button color={btnColor} size="lg" disabled={!btnActive} className="btn2" onClick={() => {
                 window.location.href='#/test';
-            }}>검사시작</button>
+            }}>검사시작</Button>
         </div>
     )
 }
