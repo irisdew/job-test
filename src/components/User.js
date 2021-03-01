@@ -1,17 +1,20 @@
 import React, { useState } from 'react';
-import { Button } from 'reactstrap';
+import { Container, Button } from 'reactstrap';
 
 export default function User(props) {
     const [name, setName] = useState('');
     const [gender, setGender] = useState('');
+
+    const [nameAlert, setNameAlert] = useState(false);
     
     function checkName(name) {
       const reg = /^[가-힣]{2,6}$/;
       if(!reg.test(name)) {
-        alert('이름이 올바르지 않습니다');
-        return false;
+        console.log("유효하지 않은 이름");
+        setNameAlert(true);
+      } else {
+        setNameAlert(false);
       }
-      return true;
     }
 
     function userData() {
@@ -28,13 +31,13 @@ export default function User(props) {
       props.paramsHandler(params);
     }
 
-    const condition = gender !== '' && checkName(name);
+    const condition = gender !== '' && !(nameAlert);
 
     const btnColor = condition ? "primary" : "secondary";
 
     return (
-        <>
-        <h1 className="title">직업가치관검사</h1>
+        <Container id="User">
+        <h1 className="user-title title">직업가치관검사</h1>
         
           <form className="name" onChange={()=>{
               const userName = document.querySelector('input[name="name"]').value;
@@ -42,15 +45,18 @@ export default function User(props) {
           }} onBlur={()=>{
             checkName(name);
           }}> 
-            <p>이름</p>
+            <p className="user-p">이름</p>
             <input name="name" type="text" />
+            <p className="name-alert" style={nameAlert ? {display: "block"} : {display: "none"}}>유효하지 않은 이름입니다!</p>
           </form>
+
+          <br/>
 
           <form className="gender" onChange={()=>{
               const userGender = document.querySelector('input[name="gender"]:checked').value;
               setGender(userGender)
             }}>
-            <p>성별</p>
+            <p className="user-p">성별</p>
             <label><input type="radio" name="gender" value="100323"/>남자</label>
             <br/>
             <label><input type="radio" name="gender" value="100324"/>여자</label>
@@ -62,6 +68,6 @@ export default function User(props) {
             window.location.href='#/intro';
             userData();
           })}>검사시작</Button>{' '} 
-        </>
+        </Container>
     )
 }

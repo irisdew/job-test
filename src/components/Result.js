@@ -11,6 +11,7 @@ export default function Result(props){
     const [graphData, setGraphData] = useState([3, 1, 7, 5, 3, 1, 4, 2])
     const [school, setSchool] = useState([]);
     const [major, setMajor] = useState([]);
+    const [rank, setRank] = useState([]);
 
     function fetch() {
         console.log("0. props:", props.params);
@@ -65,6 +66,7 @@ export default function Result(props){
             }
             console.log("9. rank1, rank2:", rank1, rank2);
 
+            setRank([rank1, rank2]);
             getJobs(rank1, rank2);
         })
     }
@@ -155,7 +157,7 @@ export default function Result(props){
     }
 
     return(
-        <Container>
+        <Container id>
             <h1 className="main title">직업가치관검사 결과표</h1>
             
             <p className="description">직업가치관이란 직업을 선택할 때 영향을 끼치는 자신만의 믿음과 신념입니다. <br/> 
@@ -172,7 +174,7 @@ export default function Result(props){
                     </tr>
                     <tr>
                         <th>{props.params.name}</th>
-                        <th>{props.params.gender}</th>
+                        <th>{(props.params.gender === "100323") ? "남성" : "여성"}</th>
                         <td>{String(endDtm).substr(0, 10)}</td>
                     </tr>
                 </thead>
@@ -180,9 +182,8 @@ export default function Result(props){
 
             <h2 className="title">나의 직업 가치관</h2>
 
-            <p>직업생활과 관련하여 {props.params.name}님은
-            ""과 ""을 가장 중요하게 생각합니다. <br/>
-            반면에 ""과 ""을 상대적으로 덜 중요하게 생각합니다.
+            <p>직업생활과 관련하여 {props.params.name}님이 가장 중요하게 생각하는 가치는 
+            "{data.labels[rank[0]-1]}", "{data.labels[rank[1]-1]}" 입니다. <br/>
             </p>
 
 
@@ -202,7 +203,7 @@ export default function Result(props){
                 <Table bordered>
                     <thead>
                         <tr>
-                            <th>학력</th>
+                            <th className="standard">학력</th>
                             <th>직업명</th>
                         </tr>
                     </thead>
@@ -230,12 +231,13 @@ export default function Result(props){
                     </tbody>
                 </Table>
             </div>
+            <br/>
             <div>
                 <h4 className="title">종사자 평균 전공별</h4>
                 <Table bordered>
                     <thead>
                         <tr>
-                            <th>분야</th>
+                            <th className="standard">분야</th>
                             <th>직업명</th>
                         </tr>
                     </thead>
@@ -276,7 +278,7 @@ export default function Result(props){
                 </Table>
                 </div>
 
-            <Button color="primary" size="lg"onClick={()=>{window.location.href='#/';}}>다시 검사하기</Button> 
+            <Button className='reBtn' color="primary" size="lg" onClick={()=>{window.location.href='#/';}}>다시 검사하기</Button> 
         </Container>
     )
 }

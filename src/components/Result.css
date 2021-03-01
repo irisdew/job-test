@@ -28,7 +28,8 @@
 }
 
 .table{
-    margin: 10px 0px;
+    width: 80%;
+    margin: 10px auto;
     font-family: 'TmoneyRoundWindRegular'; 
 }
 
@@ -45,4 +46,28 @@ a {
 table {
     table-layout: fixed;
     word-break: break-all;
+}
+
+.h1, .h2, .h3, .h4, .h5, .h6, h1, h2, h3, h4, h5, h6 {
+    margin-bottom: 30px;
+}
+
+.table td, .table th {
+    vertical-align: middle;
+}
+
+.main {
+    margin-top: 50px;
+}
+
+.title {
+    margin-top: 20px;
+}
+
+.standard {
+    width: 20%;
+}
+
+.reBtn {
+    margin: 20px auto;
 }
