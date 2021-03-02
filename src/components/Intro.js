@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useHistory } from 'react-router-dom';
 import axios from 'axios';
 import { Container, Button } from 'reactstrap';
 
@@ -9,6 +10,7 @@ export default function Intro() {
     const [answer1, setAnswer1] = useState();
     const [answer2, setAnswer2] = useState();
     const [btnActive, setBtnActive] = useState(false);
+    let history = useHistory();
 
     async function fetch() {
         const response = await axios.get('http://www.career.go.kr/inspct/openapi/test/questions?apikey=238b48bf19364a4f775ccd83b30d13b3&q=6')
@@ -68,7 +70,7 @@ export default function Intro() {
             <br/>
 
             <Button color={btnColor} size="lg" disabled={!btnActive} className="btn2" onClick={() => {
-                window.location.href='#/test';
+                history.push('/test');
             }}>검사시작</Button>
         </div>
     )

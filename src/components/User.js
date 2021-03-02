@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import { Container, Button } from 'reactstrap';
 
 export default function User(props) {
@@ -6,6 +7,8 @@ export default function User(props) {
     const [gender, setGender] = useState('');
 
     const [nameAlert, setNameAlert] = useState(false);
+
+    let history = useHistory();
     
     function checkName(name) {
       const reg = /^[가-힣]{2,6}$/;
@@ -65,9 +68,10 @@ export default function User(props) {
           <br/>
 
           <Button color={btnColor} size="lg" disabled={!(condition)} className="btn" onClick={(()=>{
-            window.location.href='#/intro';
             userData();
+            history.push('/intro');
           })}>검사시작</Button>{' '} 
         </Container>
     )
 }
+

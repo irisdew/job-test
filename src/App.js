@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { HashRouter, Route } from "react-router-dom";
+import { BrowserRouter, Switch, Route } from "react-router-dom";
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 import './App.css';
@@ -24,13 +24,15 @@ function App() {
 
   return (
       <>
-      <HashRouter>
-        <Route path='/' exact={true} component={() => <User paramsHandler={e => paramsHandler(e)}/>} />
-        <Route path='/intro' component={() => <Intro />} />
-        <Route path='/test' component={() => <Test answersHandler={e => answersHandler(e)}/>} />
-        <Route path='/completed' component={Completed} />
-        <Route path='/result' component={() => <Result params={params} answers={answers}/>} />
-      </HashRouter>
+      <BrowserRouter>
+        <Switch>
+          <Route path='/' exact={true} component={() => <User paramsHandler={e => paramsHandler(e)}/>} />
+          <Route path='/intro' component={() => <Intro />} />
+          <Route path='/test' component={() => <Test answersHandler={e => answersHandler(e)}/>} />
+          <Route path='/completed' component={Completed} />
+          <Route path='/result' component={() => <Result params={params} answers={answers}/>} />
+        </Switch>
+      </BrowserRouter>
       </>
   );
 }
