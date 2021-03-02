@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useHistory } from 'react-router-dom';
 import axios from 'axios';
 import { Bar } from 'react-chartjs-2';
 import { Container, Table, Button } from 'reactstrap';
@@ -12,6 +13,8 @@ export default function Result(props){
     const [school, setSchool] = useState([]);
     const [major, setMajor] = useState([]);
     const [rank, setRank] = useState([]);
+
+    let history = useHistory();
 
     function fetch() {
         console.log("0. props:", props.params);
@@ -278,7 +281,7 @@ export default function Result(props){
                 </Table>
                 </div>
 
-            <Button className='reBtn' color="primary" size="lg" onClick={()=>{window.location.href='#/';}}>다시 검사하기</Button> 
+            <Button className='reBtn' color="primary" size="lg" onClick={()=>{history.push('/');}}>다시 검사하기</Button> 
         </Container>
     )
 }

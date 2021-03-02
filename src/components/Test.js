@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useHistory } from 'react-router-dom';
 import axios from 'axios';
 import { Progress, Button } from 'reactstrap';
 
@@ -12,6 +13,8 @@ export default function Test(props) {
     const [isDone, setIsDone] = useState(false); 
     
     const [condition, setCondition] = useState(false);
+
+    let history = useHistory();
 
     async function fetch() {
         const response = await axios.get('http://www.career.go.kr/inspct/openapi/test/questions?apikey=238b48bf19364a4f775ccd83b30d13b3&q=6');
@@ -30,12 +33,13 @@ export default function Test(props) {
         } 
     }, [pageNum]);
     
-    const group1 = data.data.slice(0, 5);
-    const group2 = data.data.slice(5, 10);
-    const group3 = data.data.slice(10, 15);
-    const group4 = data.data.slice(15, 20);
-    const group5 = data.data.slice(20, 25);
-    const group6 = data.data.slice(25, );
+    const group1 = data.data.slice(0, 4);
+    const group2 = data.data.slice(4, 8);
+    const group3 = data.data.slice(8, 12);
+    const group4 = data.data.slice(12, 16);
+    const group5 = data.data.slice(16, 20);
+    const group6 = data.data.slice(20, 24);
+    const group7 = data.data.slice(24, 28);
     
     function qListMaker(group) {
         const qList = group.map((d) => {
@@ -51,24 +55,21 @@ export default function Test(props) {
     }
     
     function showNextQList(pageNum) {
-            setPageNum(pageNum+1);
-            document.getElementById(`group${pageNum}`).style.display = "none";
-            document.getElementById(`group${pageNum+1}`).style.display = "block";
+        document.getElementById(`group${pageNum}`).style.display = "none";
+        document.getElementById(`group${pageNum+1}`).style.display = "block";
     }
 
     function showPrevQList(pageNum) {
-        setPageNum(pageNum-1);
         console.log(pageNum);
-        if (pageNum < 2) {
-            window.location.href='#/intro'
+        if (pageNum === 1) {
+            history.push('/intro');
         } else {
             document.getElementById(`group${pageNum}`).style.display = "none";
             document.getElementById(`group${pageNum-1}`).style.display = "block";
         }
     }
     
-
-    function testData() {
+    function makeAnswers() {
         const form = document.getElementById('testForm');
         const inputs = form.querySelectorAll('input:checked');
         console.log(inputs);
@@ -81,26 +82,27 @@ export default function Test(props) {
     return(
         <>
         <Container>
-            <Progress value={Math.round(count*3.57)} max={100} /> 
+            <Progress value={Math.round(count*3.57)} max={100}></Progress> <p className="percentage">{Math.round(count*3.57)}%</p>
         </Container>
 
         <h1>검사진행</h1>
 
         <br/>
 
+        <Container id="test">
         <form id="testForm" onChange={()=>{
             const currentChecked = document.querySelectorAll('input:checked').length;
             console.log("count:", currentChecked);
             setCount(currentChecked);
-            if (currentChecked % 5 === 0) {
-                setIsDone(true);
-            } else if (currentChecked === 28) {
+            if (currentChecked === 28) {
                 console.log('count 28');
                 setCondition(true);
+            } else if (currentChecked % 4 === 0) {
+                setIsDone(true);
             }
         }}>
         <div className="group" id="group1" onChange={()=>{
-            if (document.querySelectorAll('input:checked').length === 5) {
+            if (document.querySelectorAll('input:checked').length === 4) {
                 setIsDone(true);
             }
         }}>{qListMaker(group1)}</div>
@@ -109,32 +111,37 @@ export default function Test(props) {
         <div className="group" id="group4">{qListMaker(group4)}</div>
         <div className="group" id="group5">{qListMaker(group5)}</div>
         <div className="group" id="group6">{qListMaker(group6)}</div>
+        <div className="group" id="group7">{qListMaker(group7)}</div>
         </form>
 
 
         <br/>
 
-        <Button color="primary" onClick={() => {
+        <Button className="prevBtn" color="primary" onClick={() => {
+            setPageNum(pageNum-1);
+            console.log(pageNum);
             showPrevQList(pageNum);
             setIsDone(true);
         }}>이전</Button>
         
         <Button
             color={(count !== 0 && isDone) ? "primary" : "secondary"} 
-            className={!(condition && pageNum === 6) ? "show": "hide"}
+            className={!(condition && pageNum === 7) ? "show": "hide"}
             onClick={() => {
-                console.log(pageNum);
+                setPageNum(pageNum+1);
+                console.log("다음버튼 클릭 후 페이지 번호: ", pageNum);
                 showNextQList(pageNum);
                 setIsDone(false);
             }}
             disabled={!(count !== 0 && isDone)}
         >다음</Button>
 
-        <Button color="primary" className={(condition && pageNum === 6) ? "show": "hide"} onClick={() => {
-            testData();
-            props.answersHandler(testData());
-            window.location.href='#/completed';
+        <Button color="primary" className={(condition && pageNum === 7) ? "show": "hide"} onClick={() => {
+            makeAnswers();
+            props.answersHandler(makeAnswers());
+            history.push('/completed');
         }}>완료</Button>
+        </Container>
         </>
     );
 }
