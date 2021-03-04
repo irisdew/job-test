@@ -4,8 +4,6 @@ import axios from 'axios';
 import { Bar } from 'react-chartjs-2';
 import { Container, Table, Button } from 'reactstrap';
 
-import './Result.css'
-
 export default function Result(props){
 
     const [endDtm, setEndDtm] = useState();
