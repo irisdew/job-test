@@ -1,6 +1,6 @@
 .sample {
-    border: 1px solid gray;
-    width: 800px;
+    background-color: rgb(228, 228, 228);
+    width: 1000px;
     margin: 0 auto;
 }
 
@@ -15,4 +15,232 @@
 
 .name-alert {
     color:rgb(255, 81, 81);
+}
+
+/* Test.css */
+*{
+    text-align: center;
+}
+
+#test {
+    width: 80%;
+}
+
+#question {
+    width: 100%;
+    height: 80px;
+    background-color: rgb(228, 228, 228);
+    margin: 10px auto;
+    padding: 5px 0;
+}
+
+.group{
+    display: none;
+    text-align: center;
+}
+
+.hide{
+    display: none;
+}
+
+.show{
+    display: inline-block;
+}
+
+/* h1{
+    font-family: 'TmoneyRoundWindExtraBold';
+} */
+
+.percentage {
+    text-align: right;
+}
+
+/* result.css */
+@font-face {
+    font-family: 'TmoneyRoundWindExtraBold';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-07@1.0/TmoneyRoundWindExtraBold.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'TmoneyRoundWindRegular';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-07@1.0/TmoneyRoundWindRegular.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+*{
+    text-align: center;
+    font-family: 'TmoneyRoundWindRegular'; 
+}
+
+.title{
+    font-family: 'TmoneyRoundWindExtraBold';
+}
+
+.description {
+    text-align: left;
+    background-color: lightgray;
+    padding: 20px 5px;
+}
+
+.table{
+    width: 80%;
+    margin: 10px auto;
+    font-family: 'TmoneyRoundWindRegular'; 
+}
+
+canvas {
+    width: 100%;
+    height: 300px;
+    padding: 20px 70px;
+}
+
+a {
+    margin-right: 10px;
+}
+
+table {
+    table-layout: fixed;
+    word-break: break-all;
+}
+
+.h1, .h2, .h3, .h4, .h5, .h6, h1, h2, h3, h4, h5, h6 {
+    margin-bottom: 30px;
+}
+
+.table td, .table th {
+    vertical-align: middle;
+}
+
+.main {
+    margin-top: 50px;
+}
+
+.title {
+    margin-top: 20px;
+}
+
+.standard {
+    width: 20%;
+}
+
+.reBtn {
+    margin: 20px auto;
+}
+
+/* test2.css */
+
+#test2-h1 {
+    text-align: left;
+    font-size: 2em;
+    margin-top: 30px;
+    margin-bottom: 13px;
+    float: left;
+    display: float;
+}
+
+.align-bottom {
+    padding-top: 4%;
+}
+
+#test2-percent {
+    vertical-align: bottom;
+    text-align: right;
+    margin-right: 4%;
+}
+
+#test2-p {
+    text-align: left;
+    margin-top: 3em;
+}
+
+#test2-nav {
+    color: #666;
+    text-align: left;
+    margin-top: 1em;
+    margin-left: 1.5em;
+    font-size: 0.8em;
+}
+
+#test2-q {
+    text-align: left;
+    margin-bottom: 1em;
+}
+
+#test2-qnum {
+    display: inline-block;
+    color: rgb(54, 179, 184);
+    border-radius: 70%;
+    width: 1.5em;
+    height: 1.5em;
+    margin-bottom: 0;
+    margin-right: 0.5em;
+}
+
+#test2-qstring {
+    display: inline-block;
+    margin-bottom: 0;
+}
+
+.radio-wrap {
+    text-align: left;
+    margin-left: 5%;
+    margin-bottom: 1em;
+}
+
+.radio-wrap label {
+    margin-right: 1rem;
+}
+
+.radio-wrap [type="radio"]:checked,
+.radio-wrap [type="radio"]:not(:checked) {
+    position: absolute;
+    left: -9999px;
+}
+.radio-wrap [type="radio"]:checked + label,
+.radio-wrap [type="radio"]:not(:checked) + label
+{
+    position: relative;
+    padding-left: 28px;
+    cursor: pointer;
+    line-height: 20px;
+    display: inline-block;
+    color: #666;
+}
+.radio-wrap [type="radio"]:checked + label:before,
+.radio-wrap [type="radio"]:not(:checked) + label:before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 18px;
+    height: 18px;
+    border: 1px solid #ddd;
+    border-radius: 100%;
+    background: #fff;
+}
+.radio-wrap [type="radio"]:checked + label:after,
+.radio-wrap [type="radio"]:not(:checked) + label:after {
+    content: '';
+    width: 12px;
+    height: 12px;
+    background: rgb(54, 179, 184);
+    position: absolute;
+    top: 4px;
+    left: 4px;
+    border-radius: 100%;
+    -webkit-transition: all 0.2s ease;
+    transition: all 0.2s ease;
+}
+.radio-wrap [type="radio"]:not(:checked) + label:after {
+    opacity: 0;
+    -webkit-transform: scale(0);
+    transform: scale(0);
+}
+.radio-wrap [type="radio"]:checked + label:after {
+    opacity: 1;
+    -webkit-transform: scale(1);
+    transform: scale(1);
 }

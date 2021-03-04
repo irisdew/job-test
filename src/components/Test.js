@@ -1,10 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import axios from 'axios';
-import { Progress, Button } from 'reactstrap';
-
-import './Test.css';
-import { Container } from 'react-bootstrap';
+import { Container, Progress, Button } from 'reactstrap';
 
 export default function Test(props) {
     const [data, setData] = useState({data: []});
