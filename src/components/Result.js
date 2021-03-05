@@ -2,7 +2,11 @@ import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import axios from 'axios';
 import { Bar } from 'react-chartjs-2';
-import { Container, Table, Button } from 'reactstrap';
+import { Container, Row, Col, Table, Button, TabContent, TabPane, Nav, NavItem, NavLink } from 'reactstrap';
+import classnames from 'classnames';
+import MyNav from './MyNav';
+
+import Value from './Value';
 
 export default function Result(props){
 
@@ -11,6 +15,8 @@ export default function Result(props){
     const [school, setSchool] = useState([]);
     const [major, setMajor] = useState([]);
     const [rank, setRank] = useState([]);
+    const [valueTable1, setValueTable1] = useState(null);
+    const [valueTable2, setValueTable2] = useState(null);
 
     let history = useHistory();
 
@@ -69,6 +75,8 @@ export default function Result(props){
 
             setRank([rank1, rank2]);
             getJobs(rank1, rank2);
+            setValueTable1(<Value num={rank1-1} />);
+            setValueTable2(<Value num={rank2-1} />);
         })
     }
 
@@ -118,14 +126,35 @@ export default function Result(props){
         labels: ['능력발휘', '자율성', '보수', '안정성', '사회적 인정', '사회봉사', '자기계발', '창의성'],
         datasets: [
             {
-                borderWidth: 0,
+                borderWidth: 1,
                 data: graphData,
-                backgroundColor: ["#f3a683", "#f5cd79", "#f8a5c2", "#63cdda", "#778beb", "#e77f67", "#b8e994", "#ea8685"]
+                backgroundColor: [
+                    'rgba(255, 99, 132, 0.2)',
+                    'rgba(54, 162, 235, 0.2)',
+                    'rgba(255, 206, 86, 0.2)',
+                    'rgba(75, 192, 192, 0.2)',
+                    'rgba(153, 102, 255, 0.2)',
+                    'rgba(255, 159, 64, 0.2)',
+                    'rgba(255, 99, 132, 0.2)',
+                    'rgba(54, 162, 235, 0.2)'
+                  ],
+                borderColor: [
+                    'rgba(255, 99, 132, 1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(255, 206, 86, 1)',
+                    'rgba(75, 192, 192, 1)',
+                    'rgba(153, 102, 255, 1)',
+                    'rgba(255, 159, 64, 1)',
+                    'rgba(255, 99, 132, 1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(255, 206, 86, 1)'
+                  ]
             }
         ]
     }
 
     const options = {
+        responseive: true,
         legend: {
             display: false,
         },
@@ -137,7 +166,7 @@ export default function Result(props){
                 }
             }]
         },
-        maintainAspectRatio: false
+        maintainAspectRatio: true
     }
 
     function paintJobs(jobsList) {
@@ -156,37 +185,82 @@ export default function Result(props){
         }
         return condition ? paintJobs(listName): "결과없음"
     }
+    
+    const [activeTab, setActiveTab] = useState('1');
+
+    const toggle = tab => {
+        if(activeTab !== tab) setActiveTab(tab);
+    }
+
+
+
+    const majorName = ["계열무관", "인문", "사회", "교육", "공학", "자연", "의학", "예체능"]
+    const majorTableElements = majorName.map((x, index) => {
+        return(
+        <tr className={(showJobs(major[index])==="결과없음")? "hide": null}>
+            <th scope="row">{x}</th>
+            <td>{showJobs(major[index])}</td>
+        </tr>
+        )
+    })
+
+    const schoolName = ["중졸", "고졸", "전문대졸", "대졸", "대학원졸"]
+    const schoolTableElements = schoolName.map((x, index) => {
+        return(
+        <tr className={(showJobs(school[index+1])==="결과없음")? "hide": null}>
+            <th scope="row">{x}</th>
+            <td>{showJobs(school[index+1])}</td>
+        </tr>
+        )
+    })
+
 
     return(
-        <Container id>
+        <>
+        <MyNav text="직업가치관검사" />
+<Container id="result1-whole">
+      <Nav tabs>
+        <NavItem>
+          <NavLink
+            className={classnames({ active: activeTab === '1' })}
+            onClick={() => { toggle('1'); }}
+          >
+            결과표
+          </NavLink>
+        </NavItem>
+        <NavItem>
+          <NavLink
+            className={classnames({ active: activeTab === '2' })}
+            onClick={() => { toggle('2'); }}
+          >
+            직업정보
+          </NavLink>
+        </NavItem>
+      </Nav>
+      <TabContent activeTab={activeTab}>
+        <TabPane tabId="1">
+          <Row>
+            <Col sm="12">
+            <Container id="result1">
             <h1 className="main title">직업가치관검사 결과표</h1>
-            
-            <p className="description">직업가치관이란 직업을 선택할 때 영향을 끼치는 자신만의 믿음과 신념입니다. <br/> 
-            여러분의 직업생활과 관련하여 포기하지 않는 무게중심의 역할을 한다고 볼 수 있습니다.<br/> 
-            직업가치관검사는 직업을 선택할 때 상대적으로 어떠한 가치를 중요하게 생각하는지를 알려줍니다.<br/> 
-            본인이 가장 중요하게 생각하는 가치를 충족시켜줄 수 있는 직업에 대해 생각해 볼 기회를 제공합니다.</p>
-            
-            <Table bordered>
+            <hr/>
+
+            <Table bordered size="sm">
                 <thead>
                     <tr>
                         <th>이름</th>
                         <th>성별</th>
                         <th>검사일</th>
                     </tr>
+                </thead>
+                <tbody>
                     <tr>
-                        <th>{props.params.name}</th>
-                        <th>{(props.params.gender === "100323") ? "남성" : "여성"}</th>
+                        <td>{props.params.name}</td>
+                        <td>{(props.params.gender === "100323") ? "남성" : "여성"}</td>
                         <td>{String(endDtm).substr(0, 10)}</td>
                     </tr>
-                </thead>
+                </tbody>
             </Table>
-
-            <h2 className="title">나의 직업 가치관</h2>
-
-            <p>직업생활과 관련하여 {props.params.name}님이 가장 중요하게 생각하는 가치는 
-            "{data.labels[rank[0]-1]}", "{data.labels[rank[1]-1]}" 입니다. <br/>
-            </p>
-
 
             <div className="chart">
                 <Bar 
@@ -195,13 +269,36 @@ export default function Result(props){
                     data={data}
                     options={options}
                 />
+            <p className="result1-desc">직업생활과 관련하여 {props.params.name}님이 가장 중요하게 생각하는 가치는 
+            "{data.labels[rank[0]-1]}", "{data.labels[rank[1]-1]}" 입니다. </p>
+            <p className="result1-desc">직업가치관은 직업선택에 중요한 기준이 되며, 직업가치관을 충족시키는 직업을 가지면 만족도가 높아집니다.<br/>
+            여러 학자들에 따르면 자신의 직업가치가 충족되는 직업환경에서 근무할 때 높은 만족도를 경험한다고 합니다. <br/>
+            아래의 설명을 읽어보고, 직업선택과 직업생활에 도움을 받아보세요. <br/><br/>
+            </p>
+
             </div>
 
-            <h2 className="title">나의 가치관과 관련이 높은 직업</h2>
+            {valueTable1}
+            {valueTable2}
+
+            <hr/>
+        </Container>
+            </Col>
+          </Row>
+        </TabPane>
+        <TabPane tabId="2">
+          <Row>
+            <Col sm="12">
+            <Container id="job-result1">
+            <h1 className="main title">직업가치관과 관련이 높은 직업</h1>
+            <br/>
+            <p className="result1-desc">{props.params.name}님이 가장 중요하게 생각하는 가치인 
+            "{data.labels[rank[0]-1]}", "{data.labels[rank[1]-1]}"을(를) 만족시킬 수 있는 직업은 다음과 같습니다. <br/>
+            </p>
 
             <div>
-                <h4 className="title">종사자 평균 학력별</h4>
-                <Table bordered>
+                <h5 className="title">- 종사자 평균 학력별</h5>
+                <Table hover>
                     <thead>
                         <tr>
                             <th className="standard">학력</th>
@@ -209,77 +306,34 @@ export default function Result(props){
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <th scope="row">중졸</th>
-                            <th>{showJobs(school[1])}</th>
-                        </tr>
-                        <tr>
-                            <th scope="row">고졸</th>
-                            <th>{showJobs(school[2])}</th>
-                        </tr>
-                        <tr>
-                            <th scope="row">전문대졸</th>
-                            <th>{showJobs(school[3])}</th>
-                        </tr>
-                        <tr>
-                            <th scope="row">대졸</th>
-                            <th>{showJobs(school[4])}</th>
-                        </tr>
-                        <tr>
-                            <th scope="row">대학원졸</th>
-                            <th>{showJobs(school[5])}</th>
-                        </tr>
+                        {schoolTableElements}
                     </tbody>
                 </Table>
             </div>
-            <br/>
+            <hr/>
             <div>
-                <h4 className="title">종사자 평균 전공별</h4>
-                <Table bordered>
+                <h5 className="title">- 종사자 평균 전공별</h5>
+                <Table hover>
                     <thead>
                         <tr>
-                            <th className="standard">분야</th>
+                            <th className="standard">전공</th>
                             <th>직업명</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <th scope="row">계열무관</th>
-                            <th>{showJobs(major[0])}</th>
-                        </tr>
-                        <tr>
-                            <th scope="row">인문</th>
-                            <th>{showJobs(major[1])}</th>
-                        </tr>
-                        <tr>
-                            <th scope="row">사회</th>
-                            <th>{showJobs(major[2])}</th>
-                        </tr>
-                        <tr>
-                            <th scope="row">교육</th>
-                            <th>{showJobs(major[3])}</th>
-                        </tr>
-                        <tr>
-                            <th scope="row">공학</th>
-                            <th>{showJobs(major[4])}</th>
-                        </tr>
-                        <tr>
-                            <th scope="row">자연</th>
-                            <th>{showJobs(major[5])}</th>
-                        </tr>
-                        <tr>
-                            <th scope="row">의학</th>
-                            <th>{showJobs(major[6])}</th>
-                        </tr>
-                        <tr>
-                            <th scope="row">예체능</th>
-                            <th>{showJobs(major[7])}</th>
-                        </tr>
+                        {majorTableElements}
                     </tbody>
                 </Table>
                 </div>
-
-            <Button className='reBtn' color="primary" size="lg" onClick={()=>{history.push('/');}}>다시 검사하기</Button> 
+                <hr/>
         </Container>
+            </Col>
+          </Row>
+        </TabPane>
+      </TabContent>
+      <Button className='reBtn' color="primary" onClick={()=>{history.push('/');}}>다시 검사하기</Button>
+    </Container>
+    
+        </>
     )
 }
