@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import axios from 'axios';
-import { Container, Progress, Button } from 'reactstrap';
+import { Container, Row, Col, Progress, Button } from 'reactstrap';
+
+import MyNav from './MyNav';
 
 export default function Test(props) {
     const [data, setData] = useState({data: []});
@@ -41,11 +43,17 @@ export default function Test(props) {
     function qListMaker(group) {
         const qList = group.map((d) => {
             return(
-                <div key={d.qitemNo} id="question"> 
-                  <p key={d.qitemNo}>{d.qitemNo}. {d.question}</p>
-                  <label><input type="radio" name={"B"+d.qitemNo} value={d.answerScore01}/>{d.answer01}</label> &ensp;&ensp;&ensp;&ensp;
-                  <label><input type="radio" name={"B"+d.qitemNo} value={d.answerScore02}/>{d.answer02}</label>
-              </div>
+                <Container key={d.qitemNo} id="question"> 
+                  <p id="test1-qnum">{d.qitemNo}.</p>
+                  <Row className="test1-radio-wrap">
+                    <Col xs="6" className="test1-col-A">
+                    <input type="radio" name={"B"+d.qitemNo} value={d.answerScore01} id={d.qitemNo+"-"+d.answerScore01}/><label for={d.qitemNo+"-"+d.answerScore01}>{d.answer01}</label>
+                    </Col>
+                    <Col xs="6" className="test1-col-B">
+                    <input type="radio" name={"B"+d.qitemNo} value={d.answerScore02} id={d.qitemNo+"-"+d.answerScore02}/><label for={d.qitemNo+"-"+d.answerScore02}>{d.answer02}</label>
+                    </Col>
+                  </Row>
+              </Container>
               )
             })
         return qList
@@ -69,7 +77,7 @@ export default function Test(props) {
     function makeAnswers() {
         const form = document.getElementById('testForm');
         const inputs = form.querySelectorAll('input:checked');
-        console.log(inputs);
+        // console.log(inputs);
         let sss = ""
         inputs.forEach((x)=>{sss += x.name+"="+x.value+" "});
         console.log(sss);
@@ -78,40 +86,63 @@ export default function Test(props) {
 
     return(
         <>
+        <MyNav text="직업가치관검사" />
         <Container>
-            <Progress value={Math.round(count*3.57)} max={100}></Progress> <p className="percentage">{Math.round(count*3.57)}%</p>
+          <Row>
+            <Col xs="9"><h1 id="test2-h1">검사진행 </h1></Col>
+            <Col xs="3" className="align-bottom"><p id="test2-percent">{Math.round(count*3.57)}%</p></Col>
+          </Row>
+          <Progress value={Math.round(count*3.57)} max={100}></Progress>
         </Container>
 
-        <h1>검사진행</h1>
-
-        <br/>
-
         <Container id="test">
-        <form id="testForm" onChange={()=>{
-            const currentChecked = document.querySelectorAll('input:checked').length;
-            console.log("count:", currentChecked);
-            setCount(currentChecked);
-            if (currentChecked === 28) {
-                console.log('count 28');
-                setCondition(true);
-            } else if (currentChecked % 4 === 0) {
-                setIsDone(true);
-            }
-        }}>
-        <div className="group" id="group1" onChange={()=>{
-            if (document.querySelectorAll('input:checked').length === 4) {
-                setIsDone(true);
-            }
-        }}>{qListMaker(group1)}</div>
-        <div className="group" id="group2">{qListMaker(group2)}</div>
-        <div className="group" id="group3">{qListMaker(group3)}</div>
-        <div className="group" id="group4">{qListMaker(group4)}</div>
-        <div className="group" id="group5">{qListMaker(group5)}</div>
-        <div className="group" id="group6">{qListMaker(group6)}</div>
-        <div className="group" id="group7">{qListMaker(group7)}</div>
-        </form>
-
-
+            <Row>
+            <Col xs="3">
+                <p className="test2-p">{count}/28</p>
+                <hr/>
+                <article>
+                <p className="test2-nav">1-4</p>
+                <hr/>
+                <p className="test2-nav">5-8</p>
+                <hr/>
+                <p className="test2-nav">9-12</p>
+                <hr/>
+                <p className="test2-nav">13-16</p>
+                <hr/>
+                <p className="test2-nav">17-20</p>
+                <hr/>
+                <p className="test2-nav">21-24</p>
+                <hr/>
+                <p className="test2-nav">25-28</p>
+                <hr/>
+                </article>
+            </Col>
+            <Col xs="9">
+            <p className="test1-p">두 개의 가치 중에 자신에게 더 중요한 가치를 선택하세요.</p>
+            <hr/>
+            <form id="testForm" onChange={()=>{
+                const currentChecked = document.querySelectorAll('input:checked').length;
+                console.log("count:", currentChecked);
+                setCount(currentChecked);
+                if (currentChecked === 28) {
+                    console.log('count 28');
+                    setCondition(true);
+                } else if (currentChecked % 4 === 0) {
+                    setIsDone(true);
+                }
+            }}>
+            <div className="group" id="group1" onChange={()=>{
+                if (document.querySelectorAll('input:checked').length === 4) {
+                    setIsDone(true);
+                }
+            }}>{qListMaker(group1)}</div>
+            <div className="group" id="group2">{qListMaker(group2)}</div>
+            <div className="group" id="group3">{qListMaker(group3)}</div>
+            <div className="group" id="group4">{qListMaker(group4)}</div>
+            <div className="group" id="group5">{qListMaker(group5)}</div>
+            <div className="group" id="group6">{qListMaker(group6)}</div>
+            <div className="group" id="group7">{qListMaker(group7)}</div>
+            </form>
         <br/>
 
         <Button className="prevBtn" color="primary" onClick={() => {
@@ -138,6 +169,12 @@ export default function Test(props) {
             props.answersHandler(makeAnswers());
             history.push('/completed');
         }}>완료</Button>
+            </Col>
+            </Row>
+
+
+
+            {/* </Col> */}
         </Container>
         </>
     );

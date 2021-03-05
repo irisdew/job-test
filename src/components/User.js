@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import { Container, Button } from 'reactstrap';
+import { Container, Button, ButtonGroup } from 'reactstrap';
+import { Form, FormGroup, Label, Input, FormFeedback, FormText } from 'reactstrap';
+
+import '../Appp.css';
 
 export default function User(props) {
     const [name, setName] = useState('');
@@ -40,34 +43,34 @@ export default function User(props) {
 
     return (
         <Container id="User">
-        <h1 className="user-title title">직업가치관검사</h1>
-        
-          <form className="name" onChange={()=>{
+          <h1 className="user-title title">job-test</h1>
+          <Form id="userForm"
+            onChange={()=>{
               const userName = document.querySelector('input[name="name"]').value;
               setName(userName);
-          }} onBlur={()=>{
+            }} 
+            > 
+            <FormGroup onBlur={()=>{
             checkName(name);
-          }}> 
-            <p className="user-p">이름</p>
-            <input name="name" type="text" />
-            <p className="name-alert" style={nameAlert ? {display: "block"} : {display: "none"}}>유효하지 않은 이름입니다!</p>
-          </form>
-
-          <br/>
-
-          <form className="gender" onChange={()=>{
-              const userGender = document.querySelector('input[name="gender"]:checked').value;
-              setGender(userGender)
             }}>
-            <p className="user-p">성별</p>
-            <label><input type="radio" name="gender" value="100323"/>남자</label>
-            <br/>
-            <label><input type="radio" name="gender" value="100324"/>여자</label>
-          </form>
+              <Label for="userName">이름</Label>
+              <Input name="name" invalid={nameAlert}/>
+              <FormFeedback invalid>이름은 한글 2~6자 이내로 입력해주세요.</FormFeedback>
+            </FormGroup>
+            <form className="gender" onChange={()=>{
+              const userGender = document.querySelector('input[name="gender"]:checked').value;
+              console.log(userGender);
+              setGender(userGender);
+            }}>
+              <p className="gender-p">성별</p>
+              <div className="gender-radio">
+                <label className="male"><input type="radio" name="gender" value="100323"/>남자</label> &ensp;
+                <label><input type="radio" name="gender" value="100324"/>여자</label>
+              </div>
+            </form>
+          </Form>
 
-          <br/>
-
-          <Button color={btnColor} size="lg" disabled={!(condition)} className="btn" onClick={(()=>{
+          <Button color={btnColor} disabled={!(condition)} className="btn" onClick={(()=>{
             userData();
             history.push('/intro');
           })}>검사시작</Button>{' '} 

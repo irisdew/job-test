@@ -17,6 +17,8 @@ import {
     NavbarText
   } from 'reactstrap';
 
+import '../App.css';
+
 export default function Test2() {
     const [questions, setQuestions] = useState([]);
     const [pageNum, setPageNum] = useState(1);
@@ -90,6 +92,15 @@ export default function Test2() {
         document.getElementById(`group${pageNum+1}`).style.display = "block";
     }
 
+    function makeAnswers() {
+        const form = document.getElementById('test2Form');
+        const inputs = form.querySelectorAll('input:checked');
+        let answerString = ""
+        inputs.forEach((x)=>{answerString += x.value+","});
+        console.log("answers:", answerString.slice(0, -1));
+        return(answerString.slice(0, -1));
+    }
+
         const [isOpen, setIsOpen] = useState(false);
       
         const toggle = () => setIsOpen(!isOpen);
@@ -137,29 +148,29 @@ export default function Test2() {
         <Container>
             <Row>
               <Col xs="3">
-                <p id="test2-p">{count}/49</p>
+                <p className="test2-p">{count}/49</p>
                 <hr/>
                 <article>
-                <p id="test2-nav">1-7</p>
+                <p className="test2-nav">1-7</p>
                 <hr/>
-                <p id="test2-nav">8-14</p>
+                <p className="test2-nav">8-14</p>
                 <hr/>
-                <p id="test2-nav">15-21</p>
+                <p className="test2-nav">15-21</p>
                 <hr/>
-                <p id="test2-nav">21-28</p>
+                <p className="test2-nav">21-28</p>
                 <hr/>
-                <p id="test2-nav">29-35</p>
+                <p className="test2-nav">29-35</p>
                 <hr/>
-                <p id="test2-nav">36-42</p>
+                <p className="test2-nav">36-42</p>
                 <hr/>
-                <p id="test2-nav">43-49</p>
+                <p className="test2-nav">43-49</p>
                 <hr/>
                 </article>
               </Col>
               <Col xs="9">
-                <p id="test2-p">다음 문장이 나타내는 바를 얼마나 잘 할 수 있는지, 해당되는 정도에 표시하여 주십시오.</p>
+                <p className="test2-p">다음 문장이 나타내는 바를 얼마나 잘 할 수 있는지, 해당되는 정도에 표시하여 주십시오.</p>
                 <hr/>
-                <form onChange={()=>{
+                <form id='test2Form' onChange={()=>{
                     const currentChecked = document.querySelectorAll('input:checked').length;
                     console.log("count:", currentChecked);
                     setCount(currentChecked);
@@ -172,35 +183,41 @@ export default function Test2() {
                 }}>
                   {questions}
                 </form>
+                <Row className="test2-Btns">
+                    <Button className="test2-prevBtn" color="info" onClick={() => {
+                        setPageNum(pageNum-1);
+                        console.log(pageNum);
+                        showPrevQList(pageNum);
+                        setIsDone(true);
+                    }}>이전</Button>
+                    
+                    <Button
+                        color={(count !== 0 && isDone) ? "info" : "secondary"}
+                        className={!(condition && pageNum === 7) ? "show": "hide"}
+                        onClick={() => {
+                            setPageNum(pageNum+1);
+                            console.log("다음버튼 클릭 후 페이지 번호: ", pageNum);
+                            showNextQList(pageNum);
+                            setIsDone(false);
+                        }}
+                        disabled={!(count !== 0 && isDone)}
+                        >다음</Button>
+
+                    <Button 
+                        color="info" 
+                        className={(condition && pageNum === 7) ? "show": "hide"} 
+                        onClick={() => {
+                            makeAnswers();
+                            // history.push('/completed');
+                        }}>
+                            완료
+                    </Button>
+                </Row>
               </Col>
             </Row>
             
-        
-            <Button className="prevBtn" color="info" onClick={() => {
-                setPageNum(pageNum-1);
-                console.log(pageNum);
-                showPrevQList(pageNum);
-                setIsDone(true);
-            }}>이전</Button>
+           
             
-            <Button
-                color={(count !== 0 && isDone) ? "info" : "secondary"}
-                className={!(condition && pageNum === 7) ? "show": "hide"}
-                onClick={() => {
-                    setPageNum(pageNum+1);
-                    console.log("다음버튼 클릭 후 페이지 번호: ", pageNum);
-                    showNextQList(pageNum);
-                    setIsDone(false);
-                }}
-                disabled={!(count !== 0 && isDone)}
-                >다음</Button>
-
-            <Button 
-                color="info" 
-                className={(condition && pageNum === 7) ? "show": "hide"} 
-                onClick={() => {}}>
-                    완료
-            </Button>
 
         </Container>
     </>
