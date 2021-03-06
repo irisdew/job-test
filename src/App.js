@@ -10,6 +10,7 @@ import Test from './components/Test';
 import Completed from './components/Completed';
 import Result from './components/Result';
 
+import Sample2 from './components/Sample2';
 import Test2 from './components/Test2';
 import Result2 from './components/Result2';
 import Intro from './components/Intro';
@@ -36,6 +37,7 @@ function App() {
           <Route path='/completed' component={Completed} />
           <Route path='/1/result' component={() => <Result params={params} answers={answers}/>} />
           
+          <Route path='/2/sample' component={Sample2} />
           <Route path='/2/test' component={Test2} />
           <Route path='/2/result' component={Result2} />
 

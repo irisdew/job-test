@@ -67,7 +67,7 @@ export default function Test(props) {
     function showPrevQList(pageNum) {
         console.log(pageNum);
         if (pageNum === 1) {
-            history.push('/intro');
+            history.push('/1/sample');
         } else {
             document.getElementById(`group${pageNum}`).style.display = "none";
             document.getElementById(`group${pageNum-1}`).style.display = "block";

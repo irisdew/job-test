@@ -52,7 +52,7 @@ export default function Intro() {
                 if (selectedTest === "test1") {
                     history.push('/1/sample');
                 } else if (selectedTest === "test2") {
-                    history.push('/test2');
+                    history.push('/2/sample');
                 }
             }}>검사시작</Button>
         </Row>

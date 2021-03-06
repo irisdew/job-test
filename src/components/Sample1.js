@@ -75,6 +75,7 @@ export default function Sample1() {
                         </tr>
                     </tbody>
                 </Table>
+                <p className="sample1-p red">※ 아래 제시된 예시문항을 선택해보세요.</p>
                 <Container id="sample1-question" onChange={() => {
                     setBtnActive(true);
                 }}>

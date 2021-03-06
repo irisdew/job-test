@@ -2,20 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import axios from 'axios';
 import { Container, Row, Col, Progress, Button } from 'reactstrap';
-import {
-    Collapse,
-    Navbar,
-    NavbarToggler,
-    NavbarBrand,
-    Nav,
-    NavItem,
-    NavLink,
-    UncontrolledDropdown,
-    DropdownToggle,
-    DropdownMenu,
-    DropdownItem,
-    NavbarText
-  } from 'reactstrap';
+import MyNav from './MyNav';
 
 import '../App.css';
 
@@ -107,34 +94,7 @@ export default function Test2() {
 
     return (
         <>
-        <Navbar color="light" light expand="md">
-            <NavbarBrand href="/">job-test</NavbarBrand>
-              <NavbarToggler onClick={toggle} />
-                <Collapse isOpen={isOpen} navbar>
-                <Nav className="mr-auto" navbar>
-                    <NavItem>
-                    <NavLink href="/">Home</NavLink>
-                    </NavItem>
-                    <NavItem>
-                    <NavLink href="https://www.career.go.kr/">CareerNet</NavLink>
-                    </NavItem>
-                    <UncontrolledDropdown nav inNavbar>
-                    <DropdownToggle nav caret>
-                        Options
-                    </DropdownToggle>
-                    <DropdownMenu right>
-                        <DropdownItem>
-                        Option 1
-                        </DropdownItem>
-                        <DropdownItem>
-                        Option 2
-                        </DropdownItem>
-                    </DropdownMenu>
-                    </UncontrolledDropdown>
-                </Nav>
-                <NavbarText>주요능력효능감검사</NavbarText>
-                </Collapse>
-            </Navbar>
+        <MyNav text="주요능력효능감검사" />
         
         <Container>
               <Row>
