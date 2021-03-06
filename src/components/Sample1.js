@@ -8,7 +8,6 @@ import { Progress } from 'reactstrap';
 import MyNav from './MyNav';
 
 export default function Sample1() {
-    const [question, setQuestion] = useState();
     const [answer1, setAnswer1] = useState();
     const [answer2, setAnswer2] = useState();
     const [btnActive, setBtnActive] = useState(false);
@@ -18,7 +17,6 @@ export default function Sample1() {
         const response = await axios.get('http://www.career.go.kr/inspct/openapi/test/questions?apikey=238b48bf19364a4f775ccd83b30d13b3&q=6')
         const sample = response.data.RESULT[0];
         console.log(sample);
-        setQuestion(sample.question);
         setAnswer1(sample.answer01);
         setAnswer2(sample.answer02);
     }
@@ -75,6 +73,7 @@ export default function Sample1() {
                         </tr>
                     </tbody>
                 </Table>
+                <p className="sample1-p red">※ 아래 제시된 예시문항을 선택해보세요.</p>
                 <Container id="sample1-question" onChange={() => {
                     setBtnActive(true);
                 }}>

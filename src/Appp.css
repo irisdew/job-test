@@ -152,6 +152,11 @@
     margin-top: 2rem;
   }
 
+  .red {
+    color: rgb(252, 52, 52);
+    margin-left: 3rem;
+  }
+
   #sample1 {
     text-align: center;
   }
@@ -244,3 +249,13 @@
   #job-result1 table {
     text-align: left;
   }
+
+  /*Sample2.js*/
+.sample2-q {
+  margin-left: 0;
+}
+
+#sample2-question {
+  width: 80%;
+  margin: 5% auto 5% auto;
+}

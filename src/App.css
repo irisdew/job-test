@@ -164,6 +164,7 @@ table {
 #test2-q {
     text-align: left;
     margin-bottom: 1em;
+    margin-left: 0;
 }
 
 #test2-qnum {
@@ -174,14 +175,17 @@ table {
     height: 1.5em;
     margin-bottom: 0;
     margin-right: 0.5em;
+    margin-left: 0;
 }
 
 #test2-qstring {
     display: inline-block;
     margin-bottom: 0;
+    margin-left: 0;
 }
 
 .radio-wrap {
+    display: flex;
     text-align: left;
     margin-left: 5%;
     margin-bottom: 1em;
@@ -244,11 +248,21 @@ table {
 
 .test2-Btns {
     position: relative;
+    right: 0;
 }
 
 .test2-prevBtn {
     position: absolute;
     text-align: left;
+    left: 3%;
+}
+
+#test2-nextBtn {
+    right: 0;
+}
+
+#test2-finBtn {
+    right: 0;
 }
 
 
@@ -259,17 +273,17 @@ table {
 }
 
 .result2-table {
-    font-size: 0.85em;
+    font-size: 0.95em;
 }
 
 .ability {
-    width: 12%;
+    width: 15%;
 }
 
 .definition {
-    width: 55%;
+    width: 47%;
 }
 
 .type {
-    width: 9%;
+    width: 13%;
 }

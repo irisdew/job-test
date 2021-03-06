@@ -67,7 +67,7 @@ export default function Test(props) {
     function showPrevQList(pageNum) {
         console.log(pageNum);
         if (pageNum === 1) {
-            history.push('/intro');
+            history.push('/1/sample');
         } else {
             document.getElementById(`group${pageNum}`).style.display = "none";
             document.getElementById(`group${pageNum-1}`).style.display = "block";
@@ -89,7 +89,7 @@ export default function Test(props) {
         <MyNav text="직업가치관검사" />
         <Container>
           <Row>
-            <Col xs="9"><h1 id="test2-h1">검사진행 </h1></Col>
+            <Col xs="9"><h1 id="test2-h1">검사 진행 </h1></Col>
             <Col xs="3" className="align-bottom"><p id="test2-percent">{Math.round(count*3.57)}%</p></Col>
           </Row>
           <Progress value={Math.round(count*3.57)} max={100}></Progress>
@@ -167,7 +167,7 @@ export default function Test(props) {
         <Button color="primary" className={(condition && pageNum === 7) ? "show": "hide"} onClick={() => {
             makeAnswers();
             props.answersHandler(makeAnswers());
-            history.push('/completed');
+            history.push('/1/completed');
         }}>완료</Button>
             </Col>
             </Row>

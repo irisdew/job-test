@@ -2,24 +2,11 @@ import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import axios from 'axios';
 import { Container, Row, Col, Progress, Button } from 'reactstrap';
-import {
-    Collapse,
-    Navbar,
-    NavbarToggler,
-    NavbarBrand,
-    Nav,
-    NavItem,
-    NavLink,
-    UncontrolledDropdown,
-    DropdownToggle,
-    DropdownMenu,
-    DropdownItem,
-    NavbarText
-  } from 'reactstrap';
+import MyNav from './MyNav';
 
 import '../App.css';
 
-export default function Test2() {
+export default function Test2(props) {
     const [questions, setQuestions] = useState([]);
     const [pageNum, setPageNum] = useState(1);
     const [count, setCount] = useState(0);
@@ -80,7 +67,7 @@ export default function Test2() {
     function showPrevQList(pageNum) {
         console.log(pageNum);
         if (pageNum === 1) {
-            history.push('/intro');
+            history.push('/2/sample');
         } else {
             document.getElementById(`group${pageNum}`).style.display = "none";
             document.getElementById(`group${pageNum-1}`).style.display = "block";
@@ -101,44 +88,13 @@ export default function Test2() {
         return(answerString.slice(0, -1));
     }
 
-        const [isOpen, setIsOpen] = useState(false);
-      
-        const toggle = () => setIsOpen(!isOpen);
-
     return (
         <>
-        <Navbar color="light" light expand="md">
-            <NavbarBrand href="/">job-test</NavbarBrand>
-              <NavbarToggler onClick={toggle} />
-                <Collapse isOpen={isOpen} navbar>
-                <Nav className="mr-auto" navbar>
-                    <NavItem>
-                    <NavLink href="/">Home</NavLink>
-                    </NavItem>
-                    <NavItem>
-                    <NavLink href="https://www.career.go.kr/">CareerNet</NavLink>
-                    </NavItem>
-                    <UncontrolledDropdown nav inNavbar>
-                    <DropdownToggle nav caret>
-                        Options
-                    </DropdownToggle>
-                    <DropdownMenu right>
-                        <DropdownItem>
-                        Option 1
-                        </DropdownItem>
-                        <DropdownItem>
-                        Option 2
-                        </DropdownItem>
-                    </DropdownMenu>
-                    </UncontrolledDropdown>
-                </Nav>
-                <NavbarText>주요능력효능감검사</NavbarText>
-                </Collapse>
-            </Navbar>
+        <MyNav text="주요능력효능감검사" />
         
         <Container>
               <Row>
-                <Col xs="9"><h1 id="test2-h1">검사진행 </h1></Col>
+                <Col xs="9"><h1 id="test2-h1">검사 진행 </h1></Col>
                 <Col xs="3" className="align-bottom"><p id="test2-percent">{Math.round(count*2.04)}%</p></Col>
               </Row>
                 
@@ -192,6 +148,7 @@ export default function Test2() {
                     }}>이전</Button>
                     
                     <Button
+                        id="test2-nextBtn"
                         color={(count !== 0 && isDone) ? "info" : "secondary"}
                         className={!(condition && pageNum === 7) ? "show": "hide"}
                         onClick={() => {
@@ -204,11 +161,13 @@ export default function Test2() {
                         >다음</Button>
 
                     <Button 
+                        id="test2-finBtn"
                         color="info" 
                         className={(condition && pageNum === 7) ? "show": "hide"} 
                         onClick={() => {
                             makeAnswers();
-                            // history.push('/completed');
+                            props.answersHandler(makeAnswers());
+                            history.push('/2/completed');
                         }}>
                             완료
                     </Button>

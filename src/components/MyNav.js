@@ -7,10 +7,6 @@ import {
     Nav,
     NavItem,
     NavLink,
-    UncontrolledDropdown,
-    DropdownToggle,
-    DropdownMenu,
-    DropdownItem,
     NavbarText
   } from 'reactstrap';
 
@@ -19,6 +15,7 @@ export default function MyNav(props) {
     const toggle = () => setIsOpen(!isOpen);
 
     return (
+        <div>
         <Navbar color="light" light expand="md">
             <NavbarBrand href="/">job-test</NavbarBrand>
             <NavbarToggler onClick={toggle} />
@@ -28,20 +25,21 @@ export default function MyNav(props) {
                     <NavLink href="/">Home</NavLink>
                 </NavItem>
                 <NavItem>
+                    <NavLink href="/intro">Intro</NavLink>
+                </NavItem>
+                <NavItem>
+                    <NavLink href="/1/sample">Test1</NavLink>
+                </NavItem>
+                <NavItem>
+                    <NavLink href="/2/sample">Test2</NavLink>
+                </NavItem>
+                <NavItem>
                     <NavLink href="https://www.career.go.kr/">CareerNet</NavLink>
                 </NavItem>
-                <UncontrolledDropdown nav inNavbar>
-                    <DropdownToggle nav caret>
-                        Options
-                    </DropdownToggle>
-                    <DropdownMenu right>
-                        <DropdownItem>Option 1</DropdownItem>
-                        <DropdownItem>Option 2</DropdownItem>
-                    </DropdownMenu>
-                </UncontrolledDropdown>
             </Nav>
             <NavbarText>{props.text}</NavbarText>
             </Collapse>
         </Navbar>
+        </div>
     )
 }
