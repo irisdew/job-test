@@ -1,7 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import axios from 'axios';
-import { Container, Row, Col, Button, Table } from 'reactstrap';
+import { Container, Row, Col, Button } from 'reactstrap';
 
 import { Progress } from 'reactstrap';
 

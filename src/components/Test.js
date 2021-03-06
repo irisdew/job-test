@@ -167,7 +167,7 @@ export default function Test(props) {
         <Button color="primary" className={(condition && pageNum === 7) ? "show": "hide"} onClick={() => {
             makeAnswers();
             props.answersHandler(makeAnswers());
-            history.push('/completed');
+            history.push('/1/completed');
         }}>완료</Button>
             </Col>
             </Row>

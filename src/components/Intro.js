@@ -25,7 +25,7 @@ export default function Intro() {
                     <div id="card-A" class="panel panel-default card-input">
                     <h4 class="panel-heading">직업가치관검사</h4>
                     <div class="panel-body">
-                        Product specific content
+                        Job Value Test
                     </div>
                     </div>
                 </label>   
@@ -37,7 +37,7 @@ export default function Intro() {
                     <div id="card-B" class="panel panel-default card-input">
                     <h4 class="panel-heading">주요능력효능감검사</h4>
                     <div class="panel-body">
-                        Product specific content
+                        Ability Self-Confidence Test
                     </div>
                     </div>
                 </label>

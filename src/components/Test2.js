@@ -6,7 +6,7 @@ import MyNav from './MyNav';
 
 import '../App.css';
 
-export default function Test2() {
+export default function Test2(props) {
     const [questions, setQuestions] = useState([]);
     const [pageNum, setPageNum] = useState(1);
     const [count, setCount] = useState(0);
@@ -67,7 +67,7 @@ export default function Test2() {
     function showPrevQList(pageNum) {
         console.log(pageNum);
         if (pageNum === 1) {
-            history.push('/intro');
+            history.push('/2/sample');
         } else {
             document.getElementById(`group${pageNum}`).style.display = "none";
             document.getElementById(`group${pageNum-1}`).style.display = "block";
@@ -87,10 +87,6 @@ export default function Test2() {
         console.log("answers:", answerString.slice(0, -1));
         return(answerString.slice(0, -1));
     }
-
-        const [isOpen, setIsOpen] = useState(false);
-      
-        const toggle = () => setIsOpen(!isOpen);
 
     return (
         <>
@@ -152,6 +148,7 @@ export default function Test2() {
                     }}>이전</Button>
                     
                     <Button
+                        id="test2-nextBtn"
                         color={(count !== 0 && isDone) ? "info" : "secondary"}
                         className={!(condition && pageNum === 7) ? "show": "hide"}
                         onClick={() => {
@@ -164,11 +161,13 @@ export default function Test2() {
                         >다음</Button>
 
                     <Button 
+                        id="test2-finBtn"
                         color="info" 
                         className={(condition && pageNum === 7) ? "show": "hide"} 
                         onClick={() => {
                             makeAnswers();
-                            // history.push('/completed');
+                            props.answersHandler(makeAnswers());
+                            history.push('/2/completed');
                         }}>
                             완료
                     </Button>
