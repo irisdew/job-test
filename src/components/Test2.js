@@ -98,7 +98,7 @@ export default function Test2() {
         
         <Container>
               <Row>
-                <Col xs="9"><h1 id="test2-h1">검사진행 </h1></Col>
+                <Col xs="9"><h1 id="test2-h1">검사 진행 </h1></Col>
                 <Col xs="3" className="align-bottom"><p id="test2-percent">{Math.round(count*2.04)}%</p></Col>
               </Row>
                 

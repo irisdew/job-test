@@ -175,11 +175,13 @@ table {
     height: 1.5em;
     margin-bottom: 0;
     margin-right: 0.5em;
+    margin-left: 0;
 }
 
 #test2-qstring {
     display: inline-block;
     margin-bottom: 0;
+    margin-left: 0;
 }
 
 .radio-wrap {

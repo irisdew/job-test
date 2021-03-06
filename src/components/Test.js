@@ -89,7 +89,7 @@ export default function Test(props) {
         <MyNav text="직업가치관검사" />
         <Container>
           <Row>
-            <Col xs="9"><h1 id="test2-h1">검사진행 </h1></Col>
+            <Col xs="9"><h1 id="test2-h1">검사 진행 </h1></Col>
             <Col xs="3" className="align-bottom"><p id="test2-percent">{Math.round(count*3.57)}%</p></Col>
           </Row>
           <Progress value={Math.round(count*3.57)} max={100}></Progress>
