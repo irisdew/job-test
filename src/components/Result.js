@@ -82,7 +82,7 @@ export default function Result(props){
 
     useEffect(() => {
         fetch();
-    }, []);
+    });
     
     function getJobs(rank1, rank2) {
         const job_school = `https://inspct.career.go.kr/inspct/api/psycho/value/jobs?no1=${rank1}&no2=${rank2}`
@@ -191,8 +191,6 @@ export default function Result(props){
     const toggle = tab => {
         if(activeTab !== tab) setActiveTab(tab);
     }
-
-
 
     const majorName = ["계열무관", "인문", "사회", "교육", "공학", "자연", "의학", "예체능"]
     const majorTableElements = majorName.map((x, index) => {

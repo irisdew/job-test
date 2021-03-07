@@ -3,8 +3,6 @@ import { useHistory } from 'react-router-dom';
 import { Container, Button } from 'reactstrap';
 import { Form, FormGroup, Label, Input, FormFeedback } from 'reactstrap';
 
-import '../Appp.css';
-
 export default function User(props) {
     const [name, setName] = useState('');
     const [gender, setGender] = useState('');

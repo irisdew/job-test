@@ -78,7 +78,7 @@ export default function Result(props) {
 
     useEffect(() => {
         fetch();
-    }, []);
+    });
 
     const data = {
         labels: ['신체·운동능력', '공간·지각능력', '음악능력', '창의력', '언어능력', '수리·논리능력', '자기성찰능력', '대인관계능력', '자연친화능력'],
@@ -161,7 +161,6 @@ export default function Result(props) {
                 </tr>
             </thead>
         </Table>
-        {/* <p>검사점수는 백분위와 T점수로 제시됩니다. 백분위는 비교하는 학생 전체를 100%로 하였을 경우, 본인보다 점수가 낮은 학생들이 몇 %인가를 나타냅니다. T점수는 평균이 50 표준편차가 10인 표준점수로서 같은 학년의 학생들과 비교할 때, 상대적으로 평균 50을 중심으로 어느 위치에 있는가를 알려줍니다.</p> */}
         <Bar data={data} options={options} />
         
         <p className="result1-desc">주요 능력 중 {props.params.name}님이 스스로 생각하였을 때 강한 능력은 

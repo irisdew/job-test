@@ -9,8 +9,6 @@ import creative from './img/창의성.png';
 
 import {Row, Table} from 'reactstrap';
 
-import '../Appp.css';
-
 export default function Value(props) {
   const valueData = [
     ["능력발휘","능력을 충분히 발휘할 수 있을 때 보람과 만족을 느낍니다.", "능력을 충분히 발휘할 수 있는 기회와 가능성이 주어지는 직업", "직업생활에서의 경쟁은 나를 도전적으로 만들어주고, 어려운 일을 하나씩 해결해 나가는 과정에서 성취감을 느낍니다.", ability],

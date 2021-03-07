@@ -2,8 +2,6 @@ import MyNav from './MyNav';
 import { Container, Row, Col, Button } from 'reactstrap';
 import { useHistory } from 'react-router-dom';
 
-import '../Appp.css';
-
 export default function Intro() {
     let history = useHistory();
     

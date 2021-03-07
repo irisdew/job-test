@@ -15,7 +15,7 @@ export default function Completed(props) {
                     <Col xs="9"><h1 id="test2-h1">검사가 완료되었습니다.</h1></Col>
                     <Col xs="3" className="align-bottom"><p id="test2-percent">100%</p></Col>
                 </Row>
-                <Progress value={100} max={100} />
+                <Progress color={(props.type === "1") ? "primary" : "info"} value={100} max={100} />
                 <hr />
                 <p className={(props.type === "1") ? "sample1-p" : "hide"}>직업가치관이란 직업을 선택할 때 영향을 끼치는 자신만의 믿음과 신념입니다. <br/>
                 직업생활과 관련하여 포기하지 않는 무게중심의 역할을 한다고 볼 수 있습니다.<br/> 
@@ -27,7 +27,7 @@ export default function Completed(props) {
                 9개 주요 능력과 관련된 과제에 대한 자신감의 점수가 결과로 제공됩니다.</p>
 
                 <br/>
-                <Button color="primary" onClick={() => {
+                <Button color={(props.type === "1") ? "primary" : "info"} onClick={() => {
                     history.push(`/${props.type}/result`);
                 }}>결과보기</Button>
             </Container>
