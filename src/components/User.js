@@ -35,7 +35,7 @@ export default function User(props) {
       props.paramsHandler(params);
     }
 
-    const condition = gender !== '' && !(nameAlert);
+    const condition = gender !== '' && !(nameAlert) && (name !== '');
 
     const btnColor = condition ? "primary" : "secondary";
 
