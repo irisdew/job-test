@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { BrowserRouter, Switch, Route } from "react-router-dom";
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-import './Appp.css';
+import './App.css';
 
 import User from './components/User';
 import Sample1 from './components/Sample1';
