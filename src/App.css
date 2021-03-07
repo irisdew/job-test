@@ -158,8 +158,12 @@ table {
     margin-top: 1em;
     margin-left: 1.5em;
     font-size: 0.8em;
+    cursor: pointer;
 }
 
+.test2-color {
+    color: rgb(54, 179, 184);
+}
 
 #test2-q {
     text-align: left;

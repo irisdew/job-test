@@ -77,6 +77,11 @@ export default function Test2(props) {
     function showNextQList(pageNum) {
         document.getElementById(`group${pageNum}`).style.display = "none";
         document.getElementById(`group${pageNum+1}`).style.display = "block";
+
+        const navs = document.querySelectorAll(".test2-nav")
+        navs.forEach((e)=> e.classList.remove("test2-color"));
+        document.getElementById(`nav${pageNum+1}`).classList.add("test2-color");
+
     }
 
     function makeAnswers() {
@@ -107,19 +112,19 @@ export default function Test2(props) {
                 <p className="test2-p">{count}/49</p>
                 <hr/>
                 <article>
-                <p className="test2-nav">1-7</p>
+                <p className="test2-nav test2-color" id="nav1">1-7</p>
                 <hr/>
-                <p className="test2-nav">8-14</p>
+                <p className="test2-nav" id="nav2">8-14</p>
                 <hr/>
-                <p className="test2-nav">15-21</p>
+                <p className="test2-nav" id="nav3">15-21</p>
                 <hr/>
-                <p className="test2-nav">21-28</p>
+                <p className="test2-nav" id="nav4">21-28</p>
                 <hr/>
-                <p className="test2-nav">29-35</p>
+                <p className="test2-nav" id="nav5">29-35</p>
                 <hr/>
-                <p className="test2-nav">36-42</p>
+                <p className="test2-nav" id="nav6">36-42</p>
                 <hr/>
-                <p className="test2-nav">43-49</p>
+                <p className="test2-nav" id="nav7">43-49</p>
                 <hr/>
                 </article>
               </Col>
@@ -180,5 +185,4 @@ export default function Test2(props) {
 
         </Container>
     </>
-    )
-    }
+    )}
