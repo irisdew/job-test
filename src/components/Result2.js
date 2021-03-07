@@ -78,7 +78,7 @@ export default function Result(props) {
 
     useEffect(() => {
         fetch();
-    });
+    }, []);
 
     const data = {
         labels: ['신체·운동능력', '공간·지각능력', '음악능력', '창의력', '언어능력', '수리·논리능력', '자기성찰능력', '대인관계능력', '자연친화능력'],

@@ -82,7 +82,7 @@ export default function Result(props){
 
     useEffect(() => {
         fetch();
-    });
+    }, []);
     
     function getJobs(rank1, rank2) {
         const job_school = `https://inspct.career.go.kr/inspct/api/psycho/value/jobs?no1=${rank1}&no2=${rank2}`
