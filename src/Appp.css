@@ -193,7 +193,7 @@
   .result1-desc {
     font-family: 'TmoneyRoundWindRegular';
     text-align: left;
-    margin-left: 8%;
+    margin-left: 11%;
     font-size: 1rem;
   }
 
@@ -202,7 +202,7 @@
   }
 
   img {
-    width: 60%;
+    width: 50%;
     height: 55%;
     margin: auto;
   }
