@@ -158,11 +158,16 @@ table {
     margin-top: 1em;
     margin-left: 1.5em;
     font-size: 0.8em;
-    cursor: pointer;
 }
 
 .test2-color {
     color: rgb(54, 179, 184);
+    font-weight: bolder;
+}
+
+.test1-color {
+    color: rgb(13, 110, 253);
+    font-weight: bolder;
 }
 
 #test2-q {

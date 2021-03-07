@@ -62,6 +62,10 @@ export default function Test(props) {
     function showNextQList(pageNum) {
         document.getElementById(`group${pageNum}`).style.display = "none";
         document.getElementById(`group${pageNum+1}`).style.display = "block";
+
+        const navs = document.querySelectorAll(".test2-nav")
+        navs.forEach((e)=> e.classList.remove("test1-color"));
+        document.getElementById(`nav${pageNum+1}`).classList.add("test1-color");
     }
 
     function showPrevQList(pageNum) {
@@ -71,6 +75,10 @@ export default function Test(props) {
         } else {
             document.getElementById(`group${pageNum}`).style.display = "none";
             document.getElementById(`group${pageNum-1}`).style.display = "block";
+
+            const navs = document.querySelectorAll(".test2-nav")
+            navs.forEach((e)=> e.classList.remove("test1-color"));
+            document.getElementById(`nav${pageNum-1}`).classList.add("test1-color");
         }
     }
     
@@ -101,19 +109,19 @@ export default function Test(props) {
                 <p className="test2-p">{count}/28</p>
                 <hr/>
                 <article>
-                <p className="test2-nav">1-4</p>
+                <p className="test2-nav test1-color" id="nav1">1-4</p>
                 <hr/>
-                <p className="test2-nav">5-8</p>
+                <p className="test2-nav" id="nav2">5-8</p>
                 <hr/>
-                <p className="test2-nav">9-12</p>
+                <p className="test2-nav" id="nav3">9-12</p>
                 <hr/>
-                <p className="test2-nav">13-16</p>
+                <p className="test2-nav" id="nav4">13-16</p>
                 <hr/>
-                <p className="test2-nav">17-20</p>
+                <p className="test2-nav" id="nav5">17-20</p>
                 <hr/>
-                <p className="test2-nav">21-24</p>
+                <p className="test2-nav" id="nav6">21-24</p>
                 <hr/>
-                <p className="test2-nav">25-28</p>
+                <p className="test2-nav" id="nav7">25-28</p>
                 <hr/>
                 </article>
             </Col>

@@ -71,6 +71,10 @@ export default function Test2(props) {
         } else {
             document.getElementById(`group${pageNum}`).style.display = "none";
             document.getElementById(`group${pageNum-1}`).style.display = "block";
+
+            const navs = document.querySelectorAll(".test2-nav")
+            navs.forEach((e)=> e.classList.remove("test2-color"));
+            document.getElementById(`nav${pageNum-1}`).classList.add("test2-color");
         }
     }
 
@@ -81,7 +85,6 @@ export default function Test2(props) {
         const navs = document.querySelectorAll(".test2-nav")
         navs.forEach((e)=> e.classList.remove("test2-color"));
         document.getElementById(`nav${pageNum+1}`).classList.add("test2-color");
-
     }
 
     function makeAnswers() {
@@ -179,10 +182,6 @@ export default function Test2(props) {
                 </Row>
               </Col>
             </Row>
-            
-           
-            
-
         </Container>
     </>
     )}
