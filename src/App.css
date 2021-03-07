@@ -308,9 +308,9 @@ table {
 }
 
 #userForm {
-    width: 40%;
+    width: 33%;
     text-align: left;
-    margin: 0 auto;
+    margin: 3% auto 0 auto;
 }
 
 .user-title {
