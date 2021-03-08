@@ -17,7 +17,12 @@ Functional Component +  Hooks(useState, useEffect)
 * Axios
 * React-chartjs-2
 
-## 실행
+## 설치 및 실행
+```
+npm install
+npm update
+```
+
 ```
 npm start
 ```
