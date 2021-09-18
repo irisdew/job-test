@@ -40,14 +40,14 @@ function App() {
           <Route path='/intro' component={Intro} />
           
           <Route path='/1/sample' component={Sample1} />
-          <Route path='/1/test' component={() => <Test answersHandler={e => answersHandler(e)}/>} />
-          <Route path='/1/completed' component={() => <Completed type="1"/>} />
-          <Route path='/1/result' component={() => <Result params={params} answers={answers}/>} />
+          <Route path='/1/test' render={() => <Test answersHandler={e => answersHandler(e)}/>} />
+          <Route path='/1/completed' render={() => <Completed type="1"/>} />
+          <Route path='/1/result' render={() => <Result params={params} answers={answers}/>} />
           
           <Route path='/2/sample' component={Sample2} />
-          <Route path='/2/test' component={() => <Test2 answersHandler={e => answersHandler2(e)}/>} />
-          <Route path='/2/completed' component={() => <Completed type="2"/>} />
-          <Route path='/2/result' component={() => <Result2 params={params} answers={answers2}/>} />
+          <Route path='/2/test' render={() => <Test2 answersHandler={e => answersHandler2(e)}/>} />
+          <Route path='/2/completed' render={() => <Completed type="2"/>} />
+          <Route path='/2/result' render={() => <Result2 params={params} answers={answers2}/>} />
 
 
         </Switch>

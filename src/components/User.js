@@ -53,9 +53,9 @@ export default function User(props) {
             }}>
               <Label for="userName">이름</Label>
               <Input name="name" invalid={nameAlert}/>
-              <FormFeedback invalid>이름은 한글 2~6자 이내로 입력해주세요.</FormFeedback>
+              <FormFeedback valid={false}>이름은 한글 2~6자 이내로 입력해주세요.</FormFeedback>
             </FormGroup>
-            <form className="gender" onChange={()=>{
+            <div className="gender" onChange={()=>{
               const userGender = document.querySelector('input[name="gender"]:checked').value;
               console.log(userGender);
               setGender(userGender);
@@ -65,7 +65,7 @@ export default function User(props) {
                 <label className="male"><input type="radio" name="gender" value="100323"/>남자</label> &ensp;
                 <label><input type="radio" name="gender" value="100324"/>여자</label>
               </div>
-            </form>
+            </div>
           </Form>
 
           <Button color={btnColor} disabled={!(condition)} className="btn" onClick={(()=>{

@@ -139,7 +139,6 @@ export default function Test2(props) {
                     console.log("count:", currentChecked);
                     setCount(currentChecked);
                     if (currentChecked === 49) {
-                        console.log('count 49');
                         setCondition(true);
                     } else if (currentChecked % 7 === 0) {
                         setIsDone(true);

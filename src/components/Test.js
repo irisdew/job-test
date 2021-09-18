@@ -10,7 +10,6 @@ export default function Test(props) {
     const [pageNum, setPageNum] = useState(1);
     const [count, setCount] = useState(0);
     const [isDone, setIsDone] = useState(false); 
-    
     const [condition, setCondition] = useState(false);
 
     let history = useHistory();
@@ -85,11 +84,9 @@ export default function Test(props) {
     function makeAnswers() {
         const form = document.getElementById('testForm');
         const inputs = form.querySelectorAll('input:checked');
-        // console.log(inputs);
-        let sss = ""
-        inputs.forEach((x)=>{sss += x.name+"="+x.value+" "});
-        console.log(sss);
-        return(sss);
+        let answers = ""
+        inputs.forEach((x)=>{answers += x.name+"="+x.value+" "});
+        return answers;
     }
 
     return(
@@ -179,10 +176,6 @@ export default function Test(props) {
         }}>완료</Button>
             </Col>
             </Row>
-
-
-
-            {/* </Col> */}
         </Container>
         </>
     );

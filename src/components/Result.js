@@ -5,7 +5,6 @@ import { Bar } from 'react-chartjs-2';
 import { Container, Row, Col, Table, Button, TabContent, TabPane, Nav, NavItem, NavLink } from 'reactstrap';
 import classnames from 'classnames';
 import MyNav from './MyNav';
-
 import Value from './Value';
 
 export default function Result(props){
