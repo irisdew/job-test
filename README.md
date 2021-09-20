@@ -1,12 +1,14 @@
-# Job Test
+<div align="center">
+  <h1>JOB TEST</h1>
+  <h4>커리어넷 API를 활용한 직업심리검사 웹사이트</h4>
+  <br />
+</div>
 
-웹 프로젝트-직업심리검사
+## 기능 소개
 
-커리어넷에서 제공하는 일반(성인) 대상 검사 중 
-“직업가치관검사”와 “주요능력효능감검사”를 할 수 있는 웹서비스입니다.
-
-
-http://elice-kdt-ai-track-vm-racer-34.koreacentral.cloudapp.azure.com/
+## [🔗 배포 링크](https://elice-1st-job-test.netlify.app/)
+- 버전 1.0 `http://elice-kdt-ai-track-vm-racer-34.koreacentral.cloudapp.azure.com/` 
+- 버전 1.1 https://elice-1st-job-test.netlify.app/ (현재 접속 가능)
 
 ## 사용언어 및 라이브러리
 * Javascript
@@ -19,21 +21,7 @@ Functional Component +  Hooks(useState, useEffect)
 
 ## 설치 및 실행
 ```
-npm install
-npm update
+$ yarn install
+$ yarn start
 ```
 
-```
-npm start
-```
-
-## 빌드
-```
-npm build
-```
-## 배포
-```
-sudo systemctl stop nginx
-sudo systemctl start nginx
-sudo systemctl status nginx
-```
